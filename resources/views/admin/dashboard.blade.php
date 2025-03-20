@@ -1,6 +1,10 @@
-<h1>Selamat datang {{ auth()->user()->name }} !</h1>
+@extends('admin.layouts.app')
 
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="btn btn-danger">Logout</button>
-</form>
+@section('title', 'Dashboard Admin')
+
+@section('content')
+    <h1>Selamat Datang {{ auth()->user()->name }} !</h1>
+    <p>Kelola produk, transaksi, dan pengguna dari sini.</p>
+@endsection
+
+

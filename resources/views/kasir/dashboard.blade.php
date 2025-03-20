@@ -1,6 +1,10 @@
-<h1>Selamat datang {{ auth()->user()->name }} !</h1>
+@extends('kasir.layouts.app')
 
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="btn btn-danger">Logout</button>
-</form>
+@section('title', 'Dashboard Kasir')
+
+@section('content')
+    <h1>Selamat Datang {{ auth()->user()->name }} !</h1>
+    <p>Kelola transaksi disini !</p>
+@endsection
+
+
