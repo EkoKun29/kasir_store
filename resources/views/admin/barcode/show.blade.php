@@ -7,10 +7,7 @@
         <a href="{{ route('barcode.create') }}">
             <button class="btn btn-primary" style="margin-top: 10px">Input Barcode</button>
           </a>
-          <a href="#">
-            <button class="btn btn-success" style="margin-top: 10px">Cetak PDF</button>
-          </a>
-        <table class="table table-striped">
+        <table class="table datatable">
             <thead>
                 <tr>
                     <th>ID</th>

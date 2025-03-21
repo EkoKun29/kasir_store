@@ -8,16 +8,6 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DetailPembelianController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -60,4 +50,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 
 Route::get('/pembelian/{pembelian_id}/detail/create', [DetailPembelianController::class, 'create'])->name('pembelian.detail.create');
-Route::post('/pembelian/{pembelian_id}/detail/store', [DetailPembelianController::class, 'store'])->name('pembelian.detail.store');
+// Route::post('/pembelian/{pembelian_id}/detail/store', [DetailPembelianController::class, 'store'])->name('pembelian.detail.store');
+Route::get('pembelian', [DetailPembelianController::class, 'index'])->name('pembelian.index');
+Route::get('pembelian/{id}/edit', [DetailPembelianController::class, 'edit'])->name('pembelian.edit');
+Route::delete('pembelian/{id}', [DetailPembelianController::class, 'destroy'])->name('pembelian.destroy');

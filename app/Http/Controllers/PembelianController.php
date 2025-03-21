@@ -13,7 +13,7 @@ class PembelianController extends Controller
     public function index()
     {
         $pembelians = Pembelian::where('id_user', auth()->id())->get();
-        return view('admin.pembelian.create', compact('pembelians'));
+        return view('admin.pembelian.index', compact('pembelians'));
     }
 
     // Menampilkan form pembelian
@@ -51,6 +51,8 @@ class PembelianController extends Controller
     // Proses penyimpanan data detail pembelian
     public function storeDetail(Request $request, $id)
     {
+        // dd($request->harga);
+        $pembelian = Pembelian::find($id);
         $request->validate([
             'produk.*' => 'required|string|max:255',
             'harga.*' => 'required|numeric|min:0',
@@ -60,39 +62,32 @@ class PembelianController extends Controller
         $totalHarga = 0;
 
         // Iterasi setiap produk yang diinputkan
-        foreach ($request->produk as $key => $produk) {
-            $harga = $request->harga[$key];
-            $qty = $request->qty[$key];
-            $subtotal = $harga * $qty;
+        
 
             // Simpan data ke tabel Barcode
             $barcode = Barcode::create([
-                'produk' => $produk,
-                'tanggal_beli' => now(),
-                'harga_beli' => $harga,
-                'qty' => $qty,
-                'hpp' => $harga / $qty,
+                'produk' => $request->produk,
+                'tanggal_beli' => $pembelian->tanggal_beli,
+                'harga_beli' => $request->harga,
+                'qty' => $request->qty,
+                'hpp' => $request->harga / $request->qty,
             ]);
 
             // Simpan data ke tabel detail_pembelians
             DetailPembelian::create([
                 'pembelian_id' => $id,
-                'produk' => $produk,
-                'harga' => $harga,
-                'qty' => $qty,
-                'subtotal' => $subtotal,
+                'produk' => $barcode->produk,
+                'harga' => $barcode->harga_beli,
+                'qty' => $barcode->qty,
+                'subtotal' => $barcode->harga_beli * $barcode->qty,
                 'barcode_id' => $barcode->id,
             ]);
 
-            $totalHarga += $subtotal;
-        }
-
+            
         // Update total harga di tabel pembelian
-        $pembelian = Pembelian::findOrFail($id);
-        $pembelian->total_harga += $totalHarga;
-        $pembelian->save();
+        
 
-        return redirect()->route('pembelian.detail.create', $id)
+        return redirect()->back()
             ->with('success', 'Detail pembelian berhasil ditambahkan dengan beberapa produk!');
     }
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DetailPembelian extends Model
 {
@@ -14,6 +16,11 @@ class DetailPembelian extends Model
         'harga',
         'qty',
         'subtotal',
-        'id_barcode'
+        'barcode_id'
     ];
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class, 'pembelian_id');
+    }
+
 }

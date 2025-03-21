@@ -39,7 +39,7 @@
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
+            <a href="{{ route('pembelian.index') }}">
               <i class="bi bi-circle"></i><span>Lihat Daftar Pembelian</span>
             </a>
           </li>
