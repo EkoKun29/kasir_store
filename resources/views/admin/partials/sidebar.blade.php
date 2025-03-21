@@ -34,13 +34,18 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="forms-elements.html">
+            <a href="{{ route('pembelian.create') }}">
               <i class="bi bi-circle"></i><span>Input Pembelian</span>
             </a>
           </li>
           <li>
             <a href="forms-layouts.html">
               <i class="bi bi-circle"></i><span>Lihat Daftar Pembelian</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Lihat Daftar Detail Pembelian</span>
             </a>
           </li>
         </ul>

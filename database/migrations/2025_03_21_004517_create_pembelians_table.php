@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_beli');
-            $table->string('supplier');
-            $table->decimal('total_harga', 10, 2)->default(0); // Hitung via Controller
+            $table->string('supplier', 255);
+            $table->decimal('total_harga', 10, 2)->default(0.00);
+            $table->unsignedBigInteger('id_user');
             $table->timestamps();
+            $table->foreign('id_user')->references('id')->on('users');
         });
-           
     }
 
     /**

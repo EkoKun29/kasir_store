@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('detail_pembelians', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pembelian_id')->constrained('pembelians')->onDelete('cascade');
-            $table->string('produk');
-            $table->date('tanggal_beli');
+            $table->unsignedBigInteger('pembelian_id');
+            $table->string('produk', 255);
             $table->decimal('harga', 10, 2);
-            $table->string('qty');
-            $table->decimal('subtotal', 10, 2)->storedAs('harga * qty');
-            $table->foreignId('barcode_id')->constrained('barcodes')->onDelete('cascade');
+            $table->integer('qty');
+            $table->decimal('subtotal', 10, 2)->nullable();
+            $table->unsignedBigInteger('barcode_id');
             $table->timestamps();
-        });        
+            $table->foreign('pembelian_id')->references('id')->on('pembelians')->onDelete('cascade');
+            $table->foreign('barcode_id')->references('id')->on('barcodes')->onDelete('cascade');
+        });
     }
 
     /**

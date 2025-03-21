@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pembelians', function (Blueprint $table) {
-            $table->foreignId('id_user')->after('total_harga')->constrained('users')->onDelete('cascade');
+        Schema::table('detail_pembelians', function (Blueprint $table) {
+            $table->unsignedBigInteger('pembelian_id')->nullable()->change();
         });
     }
 
@@ -21,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pembelians', function (Blueprint $table) {
-            $table->dropForeign(['id_user']);
-            $table->dropColumn('id_user');
+        Schema::table('detail_pembelians', function (Blueprint $table) {
+            $table->unsignedBigInteger('pembelian_id')->nullable(false)->change();
         });
     }
 };

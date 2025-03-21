@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DetailPembelianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +48,16 @@ Route::post('/barcode/store', [BarcodeController::class, 'store'])->name('barcod
 Route::get('/barcode/{id}/edit', [BarcodeController::class, 'edit'])->name('barcode.edit');
 Route::put('/barcode/{id}/update', [BarcodeController::class, 'update'])->name('barcode.update');
 Route::delete('/barcode/{id}/delete', [BarcodeController::class, 'destroy'])->name('barcode.destroy');
+
+//Pembelian
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
+    Route::get('pembelian/create', [PembelianController::class, 'create'])->name('pembelian.create');
+    Route::post('pembelian/store', [PembelianController::class, 'store'])->name('pembelian.store');
+
+    Route::get('pembelian/{id}/detail/create', [PembelianController::class, 'createDetail'])->name('pembelian.detail.create');
+    Route::post('pembelian/{id}/detail/store', [PembelianController::class, 'storeDetail'])->name('pembelian.detail.store');
+});
+
+Route::get('/pembelian/{pembelian_id}/detail/create', [DetailPembelianController::class, 'create'])->name('pembelian.detail.create');
+Route::post('/pembelian/{pembelian_id}/detail/store', [DetailPembelianController::class, 'store'])->name('pembelian.detail.store');

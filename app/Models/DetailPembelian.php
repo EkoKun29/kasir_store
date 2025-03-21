@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class DetailPembelian extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'pembelian_id',
+        'produk',
+        'harga',
+        'qty',
+        'subtotal',
+        'id_barcode'
+    ];
 }
