@@ -47,6 +47,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('pembelian/{id}/detail/create', [PembelianController::class, 'createDetail'])->name('pembelian.detail.create');
     Route::post('pembelian/{id}/detail/store', [PembelianController::class, 'storeDetail'])->name('pembelian.detail.store');
+    Route::put('pembelian/{id}/detail/update', [DetailPembelianController::class, 'update'])->name('pembelian.detail.update');
 });
 
 Route::get('/pembelian/{pembelian_id}/detail/create', [DetailPembelianController::class, 'create'])->name('pembelian.detail.create');

@@ -106,4 +106,34 @@ class DetailPembelianController extends Controller
 
         return redirect()->route('pembelian.index')->with('success', 'Data berhasil dihapus!');
     }
+
+    public function edit($id)
+    {
+        $detail = DetailPembelian::findOrFail($id);
+        return view('admin.pembelian.edit', compact('detail'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'produk' => 'required|string',
+            'harga' => 'required|numeric|min:1',
+            'qty' => 'required|integer|min:1',
+        ]);
+    
+        // Cari data berdasarkan ID
+        $detail = DetailPembelian::findOrFail($id);
+    
+        // Update data dengan nilai baru
+        $detail->update([
+            'produk' => $request->produk,
+            'harga' => $request->harga,
+            'qty' => $request->qty,
+            'subtotal' => $request->harga * $request->qty,
+        ]);
+    
+        return redirect()->route('pembelian.index')->with('success', 'Detail pembelian berhasil diperbarui!');
+    }
+    
+
 }
