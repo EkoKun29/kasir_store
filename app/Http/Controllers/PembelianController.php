@@ -22,7 +22,7 @@ class PembelianController extends Controller
         return view('admin.pembelian.create');
     }
 
-    // Proses penyimpanan data pembelian
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,15 +30,24 @@ class PembelianController extends Controller
             'supplier' => 'required|string|max:255',
         ]);
 
-        // Simpan data pembelian
+        // Simpan data pembelian terlebih dahulu
         $pembelian = Pembelian::create([
             'tanggal_beli' => $request->tanggal_beli,
             'supplier' => $request->supplier,
-            'total_harga' => 0,
+            'total_harga' => 0, // Awalnya total harga di-set 0
             'id_user' => auth()->id(),
         ]);
 
-        return redirect()->route('pembelian.detail.create', $pembelian->id);
+        // Hitung total harga baru
+        $totalHarga = DetailPembelian::where('pembelian_id', $pembelian->id)->sum('subtotal');
+
+        // Update total harga pada tabel pembelian
+        $pembelian->update([
+            'total_harga' => $totalHarga
+        ]);
+
+        return redirect()->route('pembelian.detail.create', $pembelian->id)
+                        ->with('success', 'Data pembelian berhasil disimpan.');
     }
 
     // Menampilkan form detail pembelian
@@ -83,10 +92,10 @@ class PembelianController extends Controller
                 'barcode_id' => $barcode->id,
             ]);
 
-            
-        // Update total harga di tabel pembelian
+            // $totalHarga += $subtotal;
+            // // Update total harga di tabel pembelian
+            // $pembelian->update(['total_harga' => $totalHarga]);
         
-
         return redirect()->back()
             ->with('success', 'Detail pembelian berhasil ditambahkan dengan beberapa produk!');
     }

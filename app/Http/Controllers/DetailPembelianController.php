@@ -2,138 +2,86 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barcode;
+//use Milon\Barcode\DNS1D;
+//use Milon\Barcode\DNS2D;
 use App\Models\Pembelian;
 use Illuminate\Http\Request;
 use App\Models\DetailPembelian;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class DetailPembelianController extends Controller
 {
     public function index()
     {
-        $pembelian = DetailPembelian::all(); 
+        $pembelian = DetailPembelian::all();
         return view('admin.pembelian.index', compact('pembelian'));
     }
-    // Menampilkan form tambah detail pembelian
+
     public function create($pembelian_id)
     {
         $pembelian = Pembelian::findOrFail($pembelian_id);
         return view('admin.pembelian.create_detail', compact('pembelian'));
     }
-    
 
-    // Menyimpan detail pembelian ke database
     public function store(Request $request, $pembelian_id)
-    {
-        $request->validate([
-            'produk' => 'required|array',
-            'produk.*' => 'required|string',
-            'harga' => 'required|array',
-            'harga.*' => 'required|numeric|min:1',
-            'qty' => 'required|array',
-            'qty.*' => 'required|integer|min:1',
-        ]);
-    
-        // Ambil data tanggal_beli dari tabel pembelians
-        $pembelian = Pembelian::findOrFail($pembelian_id);
-    
-        // Inisialisasi total harga
-        $totalHarga = 0;
-
-        $barcode = \App\Models\Barcode::create([
-                    'produk' => $produk,
-                    'tanggal_beli' => $pembelian->tanggal_beli, 
-                    'harga_beli' => $request->harga,
-                    'qty' => $request->qty,
-                    'hpp' => $request->harga / $request->qty,
-                ]);
-
-        DetailPembelian::create([
-                    'pembelian_id' => $pembelian_id,
-                    'produk' => $produk,
-                    'harga' => $request->harga[$key],
-                    'qty' => $request->qty[$key],
-                    'subtotal' => $subtotal,
-                    'barcode_id' => $barcode->id,
-                ]);
-
-
-    
-        // Loop untuk menyimpan data array dan menghitung total harga
-        // foreach ($request->produk as $key => $produk) {
-        //     $subtotal = $request->harga[$key] * $request->qty[$key];
-        //     $totalHarga += $subtotal;
-    
-        //     // Simpan ke tabel `barcodes` terlebih dahulu
-        //     $barcode = \App\Models\Barcode::create([
-        //         'produk' => $produk,
-        //         'tanggal_beli' => $pembelian->tanggal_beli, 
-        //         'harga_beli' => $request->harga[$key],
-        //         'qty' => $request->qty[$key],
-        //         'hpp' => $request->harga[$key] / $request->qty[$key],
-        //     ]);
-
-        //     dd($barcode->id);
-    
-        //     // Simpan ke tabel `detail_pembelians` dengan barcode_id
-        //     DetailPembelian::create([
-        //         'pembelian_id' => $pembelian_id,
-        //         'produk' => $produk,
-        //         'harga' => $request->harga[$key],
-        //         'qty' => $request->qty[$key],
-        //         'subtotal' => $subtotal,
-        //         'barcode_id' => $barcode->id,
-        //     ]);
-        // }
-    
-        // // Update total harga pada tabel pembelians
-        // Pembelian::where('id', $pembelian_id)->update([
-        //     'total_harga' => $totalHarga
-        // ]);
-    
-        return redirect()->route('pembelian.create')->with('success', 'Detail pembelian dan barcode berhasil ditambahkan.');
-    }    
-    
-    // Fungsi untuk menghasilkan barcode_id otomatis
-    private function generateBarcodeId()
-    {
-        return strtoupper(substr(md5(uniqid()), 0, 8));
-    }
-
-    public function destroy($id)
-    {
-        $detail = DetailPembelian::findOrFail($id);
-        $detail->delete();
-
-        return redirect()->route('pembelian.index')->with('success', 'Data berhasil dihapus!');
-    }
-
-    public function edit($id)
-    {
-        $detail = DetailPembelian::findOrFail($id);
-        return view('admin.pembelian.edit', compact('detail'));
-    }
-
-    public function update(Request $request, $id)
     {
         $request->validate([
             'produk' => 'required|string',
             'harga' => 'required|numeric|min:1',
             'qty' => 'required|integer|min:1',
         ]);
-    
-        // Cari data berdasarkan ID
-        $detail = DetailPembelian::findOrFail($id);
-    
-        // Update data dengan nilai baru
-        $detail->update([
+
+        $pembelian = Pembelian::findOrFail($pembelian_id);
+
+        $subtotal = $request->harga * $request->qty;
+
+        // Simpan data barcode
+        $barcode = Barcode::create([
+            'produk' => $request->produk,
+            'tanggal_beli' => $pembelian->tanggal_beli,
+            'harga_beli' => $request->harga,
+            'qty' => $request->qty,
+            'hpp' => $request->harga / $request->qty,
+            'barcode' => $produkId,
+        ]);
+
+        // Simpan data detail pembelian
+        DetailPembelian::create([
+            'pembelian_id' => $pembelian_id,
             'produk' => $request->produk,
             'harga' => $request->harga,
             'qty' => $request->qty,
-            'subtotal' => $request->harga * $request->qty,
+            'subtotal' => $subtotal,
+            'barcode_id' => $barcode->id
         ]);
-    
-        return redirect()->route('pembelian.index')->with('success', 'Detail pembelian berhasil diperbarui!');
+
+        return redirect()->route('pembelian.create', $pembelian_id)
+                         ->with('success', 'Detail pembelian dan barcode berhasil ditambahkan.');
     }
-    
+
+    public function showBarcode($id)
+    {
+        $detail = DetailPembelian::with('barcode')->findOrFail($id);
+
+        if (!$detail->barcode) {
+            return back()->with('error', 'Data barcode tidak ditemukan');
+        }
+
+        // // Generate QR Code
+        // $dns1d = new DNS1D();
+        // $barcodeBase64 = $dns1d->getBarcodePNG($detail->barcode->barcode, 'C128A', 3, 30);
+        // $barcodeData = 'data:image/png;base64,' . $barcodeBase64;
+        // $dns2d = new DNS2D();
+        // $barcodeBase64 = $dns2d->getBarcodePNG($detail->id_barcode, 'QRCODE');
+        // $barcodeData = 'data:image/png;base64,' . $barcodeBase64;
+
+        return view('admin.pembelian.print_barcode', [
+            'detail' => $detail,
+            //'barcodeData' => $barcodeData
+        ]);
+    }
+        
 
 }

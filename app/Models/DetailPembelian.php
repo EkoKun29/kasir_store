@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\Barcode;
 use App\Models\Pembelian;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,9 +19,14 @@ class DetailPembelian extends Model
         'subtotal',
         'barcode_id'
     ];
+
     public function pembelian()
     {
         return $this->belongsTo(Pembelian::class, 'pembelian_id');
     }
 
+    public function barcode()
+    {
+        return $this->belongsTo(Barcode::class, 'barcode_id');
+    }
 }

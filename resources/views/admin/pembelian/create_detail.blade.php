@@ -1,12 +1,14 @@
-@extends('admin.layouts.app')  
+@extends('admin.layouts.app')
 
-@section('content') 
+@section('content')
 <div class="container">
-    <div class="card shadow-sm mb-4">
-        <div class="card-header bg-primary text-white">
-            <h1 class="m-0"><i class="fas fa-shopping-cart mr-2"></i> Tambah Detail Pembelian</h1>
-        </div>
-        <div class="card-body">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Input Detail Pembelian</h3>
+                </div>
+                <div class="card-body">
             <form action="{{ route('pembelian.detail.store', $pembelian->id) }}" method="POST">
                 @csrf
                 

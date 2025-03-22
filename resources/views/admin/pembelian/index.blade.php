@@ -49,7 +49,12 @@
                         @method('DELETE')
                     </form>
 
-                    <a href="#" class="btn btn-success btn-sm" style="margin-top: 5px">Cetak Barcode</a>
+                    <a href="{{ route('pembelian.barcode', ['id' => $detail->id]) }}" 
+                        class="btn btn-success btn-sm" 
+                        style="margin-top: 5px">
+                        Cetak Barcode
+                     </a>
+                     
                 </td>
             </tr>
             @endforeach

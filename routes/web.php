@@ -55,3 +55,5 @@ Route::get('/pembelian/{pembelian_id}/detail/create', [DetailPembelianController
 Route::get('pembelian', [DetailPembelianController::class, 'index'])->name('pembelian.index');
 Route::get('pembelian/{id}/edit', [DetailPembelianController::class, 'edit'])->name('pembelian.edit');
 Route::delete('pembelian/{id}', [DetailPembelianController::class, 'destroy'])->name('pembelian.destroy');
+Route::get('/pembelian/{id}/barcode', [DetailPembelianController::class, 'showBarcode'])->name('pembelian.barcode');
+
