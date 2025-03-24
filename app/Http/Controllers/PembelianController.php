@@ -80,6 +80,7 @@ class PembelianController extends Controller
 
             $pembelian->total_harga +=$detailPembelian->subtotal;
             $pembelian->save();
+            
 
             $dataBarcode = new Barcode;
             $dataBarcode->produk = $detailPembelian->produk;
@@ -119,22 +120,69 @@ class PembelianController extends Controller
          $request->validate([
              'supplier' => 'required|string|max:255',
              'tanggal_beli' => 'required|date',
-             'total_harga' => 'required|numeric',
+            // 'total_harga' => 'required|numeric',
          ]);
  
          $pembelian = Pembelian::findOrFail($id);
          $pembelian->update($request->all());
- 
+
          return redirect()->route('pembelian.index')
                           ->with('success', 'Data pembelian berhasil diperbarui.');
+     }
+
+     public function editDetail ($id){
+        $detailPembelian = DetailPembelian::findOrFail($id);
+        return view('admin.pembelian.edit_detail',compact('detailPembelian'));
+     }
+     
+     public function updateDetail(Request $request, $id){
+        $detailPembelian = DetailPembelian::find($id);
+        $detailPembelian->produk = $request->produk;
+        $detailPembelian->harga = $request->harga;
+        $detailPembelian->qty = $request->qty;
+        $detailPembelian->subtotal = $request->harga * $detailPembelian->qty;
+        $detailPembelian->save();
+
+        $pembelian = Pembelian::find($detailPembelian->pembelian_id);
+        $pembelian->total_harga +=$detailPembelian->subtotal;
+        $pembelian->save();
+        
+        return redirect()->route('pembelian.detail', $detailPembelian->pembelian_id)
+                         ->with('success', 'Produk berhasil diperbarui.');
+
      }
  
      public function destroy($id)
      {
          $pembelian = Pembelian::findOrFail($id);
          $pembelian->delete();
- 
+
          return redirect()->route('pembelian.index')
                           ->with('success', 'Data pembelian berhasil dihapus.');
      }
+
+    //  private function updateTotalHarga($pembelianId)
+    // {
+    //     $pembelian = Pembelian::find($pembelianId);
+
+    //     if ($pembelian) {
+    //         $totalHarga = DetailPembelian::where('pembelian_id', $pembelianId)->sum('subtotal');
+    //         $pembelian->update(['total_harga' => $totalHarga]);
+    //     }
+    // }
+
+    public function destroyDetail($id)
+    {
+        $detailPembelian = DetailPembelian::findOrFail($id);
+
+        $pembelianId = $detailPembelian->pembelian_id;
+        $detailPembelian->delete();
+
+        $this->updateTotalHarga($pembelianId);
+
+        return redirect()->route('pembelian.detail.create', $pembelianId)
+            ->with('success', 'Detail pembelian berhasil dihapus.');
+    }
+
+
 }

@@ -49,10 +49,15 @@ class DetailPembelianController extends Controller
     public function destroy($id)
     {
         $detail = DetailPembelian::findOrFail($id);
+
+        if ($detail->barcode) {
+            $detail->barcode->delete();
+        }
+
         $detail->delete();
 
-        return redirect()->route('pembelian.index', $detail->pembelian_id)
-                         ->with('success', 'Produk berhasil dihapus.');
+        return redirect()->route('pembelian.index')
+                        ->with('success', 'Produk dan data barcode berhasil dihapus.');
     }
 
 }

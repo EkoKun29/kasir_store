@@ -87,6 +87,8 @@ class BarcodeController extends Controller
     {
         $detail = DetailPembelian::with('barcode')->findOrFail($id);
 
+        // dd($detail);
+
         if (!$detail->barcode) {
             return back()->with('error', 'Data barcode tidak ditemukan');
         }
@@ -99,6 +101,18 @@ class BarcodeController extends Controller
         $detail = DetailPembelian::findOrFail($id);
 
         return view('admin.barcode.detail_produk', compact('detail'));
+    }
+
+    public function penjualan(Request $request){
+        $barcode = Barcode::where('id', )->first();
+        $jual = New Pembelian;
+        $jual->id_barcode = $barcode->id;
+        $jual->produk = $barcode->produk;
+        $jual->harga_beli = $barcode->harga_beli;
+        $jual->hpp = $barcode->hpp;
+        $jual->qty = 1;
+        $jual->save();
+
     }
 
 }

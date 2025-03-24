@@ -4,23 +4,6 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Detail Pembelian</h5>
-
-        <table class="table">
-            <tr>
-                <th>Supplier</th>
-                <td>{{ $pembelian->supplier }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Beli</th>
-                <td>{{ \Carbon\Carbon::parse($pembelian->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <th>Total Harga</th>
-                <td>Rp. {{ number_format($pembelian->total_harga, 2) }}</td>
-            </tr>
-        </table>
-
-        <h5 class="mt-4">Produk yang Dibeli</h5>
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center">
@@ -32,22 +15,23 @@
                     <th>Aksi</th>
                 </tr>
             </thead>
+            <?php $no =1; ?>
             <tbody>
                 @if($pembelian->detailPembelian->isNotEmpty())
                     @foreach($pembelian->detailPembelian as $key => $detail)
                     <tr>
-                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $no++ }}</td>
                         <td>{{ $detail->produk }}</td>
                         <td>Rp. {{ number_format($detail->harga, 2) }}</td>
                         <td>{{ $detail->qty }}</td>
                         <td>Rp. {{ number_format($detail->subtotal, 2) }}</td>
                         <td>
-                            <a href="{{ route('detailPembelian.edit', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('detailPembelian.destroy', $detail->id) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('pembelian.edit-detail', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            {{-- <form action="{{ route('detailPembelian.destroy', $detail->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                     @endforeach

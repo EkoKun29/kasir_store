@@ -10,7 +10,7 @@
         <table class="table datatable">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No</th>
                     <th>Produk</th>
                     <th>Tanggal Beli</th>
                     <th>Harga Beli</th>
@@ -19,12 +19,13 @@
                     <th>Aksi</th>
                 </tr>
             </thead>
+            <?php $no =1; ?>
             <tbody>
                 @foreach ($barcodes as $barcode)
                 <tr>
-                    <td>{{ $barcode->id }}</td>
+                    <td>{{ $no++ }}</td>
                     <td>{{ $barcode->produk }}</td>
-                    <td>{{ \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d F Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
                     <td>Rp. {{ number_format($barcode->harga_beli, 2, ',', '.') }}</td>
                     <td>{{ $barcode->qty }}</td>
                     <td>{{ $barcode->hpp }}</td>

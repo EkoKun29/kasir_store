@@ -18,10 +18,10 @@
             <input type="date" id="tanggal_beli" name="tanggal_beli" value="{{ old('tanggal_beli', $pembelian->tanggal_beli) }}" class="form-control" required>
         </div>
 
-        <div class="mb-3">
+        {{-- <div class="mb-3">
             <label for="total_harga" class="form-label">Total Harga</label>
-            <input type="number" id="total_harga" name="total_harga" value="{{ old('total_harga', $pembelian->total_harga) }}" class="form-control" required>
-        </div>
+            <input type="number" id="total_harga" name="total_harga" value="{{ old('total_harga', $pembelian->total_harga) }}" class="form-control" readonly>
+        </div> --}}
 
         <button type="submit" class="btn btn-primary">Perbarui</button>
         <a href="{{ route('pembelian.index') }}" class="btn btn-secondary">Batal</a>

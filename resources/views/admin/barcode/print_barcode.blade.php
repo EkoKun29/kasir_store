@@ -72,6 +72,6 @@
 <script>jQuery('#qrcode').qrcode({
     width: 120,
     height: 120,
-    text: "{{ route('produk.detail', ['id' => $detail->id]) }}"
+    text: "{{ $detail->barcode_id }}"
 });
 </script>
