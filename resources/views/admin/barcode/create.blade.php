@@ -24,7 +24,6 @@
                             <input type="number" class="form-control" id="harga_beli" name="harga_beli" min="1" 
                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                         </div>
-                        
                         <div class="form-group">
                             <label for="qty">Jumlah (Qty)</label>
                             <input type="number" class="form-control" id="qty" name="qty" min="1"

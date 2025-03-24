@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\DetailPembelian;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,6 +18,6 @@ class Pembelian extends Model
     ];
     public function detailPembelian()
     {
-        return $this->hasMany(DetailPembelian::class, 'pembelian_id');
+        return $this->hasMany(DetailPembelian::class);
     }
 }

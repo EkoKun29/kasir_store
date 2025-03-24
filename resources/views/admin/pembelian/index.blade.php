@@ -3,41 +3,42 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Data Detail Pembelian</h5>
-        <a href="{{ route('pembelian.create') }}">
+        <h5 class="card-title">Data Pembelian</h5>
+        {{-- <a href="{{ route('pembelian.create') }}">
             <button class="btn btn-primary">Input Pembelian</button>
-          </a>
+          </a> --}}
     <table class="table datatable" style="margin-top: 15px">
         <thead class="thead-dark">
             <tr style="text-align: center">
-                <th>ID</th>
+                <th>No</th>
                 <th>Supplier</th>
                 <th>Tanggal Beli</th>
-                <th>Produk</th>
+                {{-- <th>Produk</th>
                 <th>Harga</th>
                 <th>Qty</th>
-                <th>Subtotal</th>
-                <th>Barcode ID</th>
+                <th>Subtotal</th> --}}
+                {{-- <th>Barcode ID</th> --}}
                 <th>Aksi</th>
             </tr>
         </thead>
+        <?php $no =1; ?>
         <tbody>
             @foreach($pembelian as $detail)
             <tr>
-                <td>{{ $detail->id }}</td>
-                <td>{{ $detail->pembelian->supplier ?? '-' }}</td>
-                <td>{{ \Carbon\Carbon::parse($detail->pembelian->tanggal_beli)->translatedFormat('d F Y') }}</td>
-                <td>{{ $detail->produk }}</td>
+                <td>{{ $no++ }}</td>
+                <td>{{ $detail->supplier }}</td>
+                <td>{{ \Carbon\Carbon::parse($detail->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
+                {{-- <td>{{ $detail->produk }}</td>
                 <td>Rp. {{ number_format($detail->harga, 2) }}</td>
                 <td>{{ $detail->qty }}</td>
-                <td>Rp. {{ number_format($detail->subtotal, 2) }}</td>
-                <td>
+                <td>Rp. {{ number_format($detail->subtotal, 2) }}</td> --}}
+                {{-- <td>
                     @if($detail->barcode_id)
                         {{ $detail->barcode_id }}
                     @else
                         <span class="text-danger">Belum Tersedia</span>
                     @endif
-                </td>
+                </td> --}}
                 <td>
                     <a href="{{ route('pembelian.edit', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $detail->id }})">
@@ -48,12 +49,6 @@
                         @csrf
                         @method('DELETE')
                     </form>
-
-                    <a href="{{ route('pembelian.barcode', ['id' => $detail->id]) }}" 
-                        class="btn btn-success btn-sm" 
-                        style="margin-top: 5px">
-                        Cetak Barcode
-                     </a>
                      
                 </td>
             </tr>

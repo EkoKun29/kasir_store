@@ -38,6 +38,11 @@
                             @csrf
                             @method('DELETE')
                         </form>
+                        <a href="{{ route('barcode.show', ['id' => $barcode->id]) }}" 
+                            class="btn btn-success btn-sm" 
+                            style="margin-top: 5px">
+                            Cetak Barcode
+                        </a>                        
                     </td>
                 </tr>
                 @endforeach

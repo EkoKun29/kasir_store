@@ -22,11 +22,11 @@ class DetailPembelian extends Model
 
     public function pembelian()
     {
-        return $this->belongsTo(Pembelian::class, 'pembelian_id');
+        return $this->belongsTo(Pembelian::class);
     }
 
     public function barcode()
     {
-        return $this->belongsTo(Barcode::class, 'barcode_id');
+        return $this->belongsTo(Barcode::class);
     }
 }

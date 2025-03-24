@@ -38,6 +38,7 @@ Route::post('/barcode/store', [BarcodeController::class, 'store'])->name('barcod
 Route::get('/barcode/{id}/edit', [BarcodeController::class, 'edit'])->name('barcode.edit');
 Route::put('/barcode/{id}/update', [BarcodeController::class, 'update'])->name('barcode.update');
 Route::delete('/barcode/{id}/delete', [BarcodeController::class, 'destroy'])->name('barcode.destroy');
+Route::get('/barcode/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
 
 //Pembelian
 Route::prefix('admin')->middleware('auth')->group(function () {
@@ -45,15 +46,14 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('pembelian/create', [PembelianController::class, 'create'])->name('pembelian.create');
     Route::post('pembelian/store', [PembelianController::class, 'store'])->name('pembelian.store');
 
-    Route::get('pembelian/{id}/detail/create', [PembelianController::class, 'createDetail'])->name('pembelian.detail.create');
-    Route::post('pembelian/{id}/detail/store', [PembelianController::class, 'storeDetail'])->name('pembelian.detail.store');
+    Route::get('pembelian/{pembelian_id}/detail/create', [PembelianController::class, 'createDetail'])->name('pembelian.detail.create');
+    Route::post('pembelian/detail/store', [PembelianController::class, 'storeDetail'])->name('pembelian.detail.store');
     Route::put('pembelian/{id}/detail/update', [DetailPembelianController::class, 'update'])->name('pembelian.detail.update');
 });
 
-Route::get('/pembelian/{pembelian_id}/detail/create', [DetailPembelianController::class, 'create'])->name('pembelian.detail.create');
-// Route::post('/pembelian/{pembelian_id}/detail/store', [DetailPembelianController::class, 'store'])->name('pembelian.detail.store');
-Route::get('pembelian', [DetailPembelianController::class, 'index'])->name('pembelian.index');
+// Route::get('pembelian', [DetailPembelianController::class, 'index'])->name('pembelian.index');
 Route::get('pembelian/{id}/edit', [DetailPembelianController::class, 'edit'])->name('pembelian.edit');
 Route::delete('pembelian/{id}', [DetailPembelianController::class, 'destroy'])->name('pembelian.destroy');
-Route::get('/pembelian/{id}/barcode', [DetailPembelianController::class, 'showBarcode'])->name('pembelian.barcode');
+// Route::get('/pembelian/{id}/barcode', [DetailPembelianController::class, 'showBarcode'])->name('pembelian.barcode');
+
 

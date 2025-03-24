@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barcode;
 use Illuminate\Http\Request;
+use App\Models\DetailPembelian;
 
 class BarcodeController extends Controller
 {
@@ -81,4 +82,17 @@ class BarcodeController extends Controller
 
         return redirect()->route('barcode.index')->with('success', 'Data barcode berhasil dihapus!');
     }
+    
+    
+    public function showBarcode($id)
+    {
+        $detail = DetailPembelian::with('barcode')->findOrFail($id);
+
+        if (!$detail->barcode) {
+            return back()->with('error', 'Data barcode tidak ditemukan');
+        }
+
+        return view('admin.barcode.print_barcode', compact('detail'));
+    }
+    
 }

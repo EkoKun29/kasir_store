@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('detail_pembelians', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('barcode_id')->nullable()->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('detail_pembelians', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('barcode_id')->nullable(false)->change();
         });
     }
 };

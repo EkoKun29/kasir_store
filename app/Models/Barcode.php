@@ -15,4 +15,6 @@ class Barcode extends Model
         'qty',
         'hpp',
     ];
+
+    
 }

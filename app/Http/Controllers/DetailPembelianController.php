@@ -22,66 +22,58 @@ class DetailPembelianController extends Controller
     public function create($pembelian_id)
     {
         $pembelian = Pembelian::findOrFail($pembelian_id);
+        $detailPembelians = DetailPembelian::where('pembelian_id', $pembelian_id)->get();
         return view('admin.pembelian.create_detail', compact('pembelian'));
     }
 
-    public function store(Request $request, $pembelian_id)
-    {
-        $request->validate([
-            'produk' => 'required|string',
-            'harga' => 'required|numeric|min:1',
-            'qty' => 'required|integer|min:1',
-        ]);
+    // public function store(Request $request, $pembelian_id)
+    // {
+    //     $request->validate([
+    //         'produk' => 'required|string',
+    //         'harga' => 'required|numeric|min:1',
+    //         'qty' => 'required|integer|min:1',
+    //     ]);
 
-        $pembelian = Pembelian::findOrFail($pembelian_id);
+    //     $pembelian = Pembelian::findOrFail($pembelian_id);
 
-        $subtotal = $request->harga * $request->qty;
+    //     $subtotal = $request->harga * $request->qty;
 
-        // Simpan data barcode
-        $barcode = Barcode::create([
-            'produk' => $request->produk,
-            'tanggal_beli' => $pembelian->tanggal_beli,
-            'harga_beli' => $request->harga,
-            'qty' => $request->qty,
-            'hpp' => $request->harga / $request->qty,
-            'barcode' => $produkId,
-        ]);
+    //     // Simpan data barcode
+    //     $barcode = Barcode::create([
+    //         'produk' => $request->produk,
+    //         'tanggal_beli' => $pembelian->tanggal_beli,
+    //         'harga_beli' => $request->harga,
+    //         'qty' => $request->qty,
+    //         'hpp' => $request->harga / $request->qty,
+    //         'barcode' => $produkId,
+    //     ]);
 
-        // Simpan data detail pembelian
-        DetailPembelian::create([
-            'pembelian_id' => $pembelian_id,
-            'produk' => $request->produk,
-            'harga' => $request->harga,
-            'qty' => $request->qty,
-            'subtotal' => $subtotal,
-            'barcode_id' => $barcode->id
-        ]);
+    //     // Simpan data detail pembelian
+    //     DetailPembelian::create([
+    //         'pembelian_id' => $pembelian_id,
+    //         'produk' => $request->produk,
+    //         'harga' => $request->harga,
+    //         'qty' => $request->qty,
+    //         'subtotal' => $subtotal,
+    //         'barcode_id' => $barcode->id
+    //     ]);
 
-        return redirect()->route('pembelian.create', $pembelian_id)
-                         ->with('success', 'Detail pembelian dan barcode berhasil ditambahkan.');
-    }
+    //     return redirect()->route('pembelian.create', $pembelian_id)
+    //                      ->with('success', 'Detail pembelian dan barcode berhasil ditambahkan.');
+    // }
 
-    public function showBarcode($id)
-    {
-        $detail = DetailPembelian::with('barcode')->findOrFail($id);
+    // public function showBarcode($id)
+    // {
+    //     $detail = DetailPembelian::with('barcode')->findOrFail($id);
 
-        if (!$detail->barcode) {
-            return back()->with('error', 'Data barcode tidak ditemukan');
-        }
+    //     if (!$detail->barcode) {
+    //         return back()->with('error', 'Data barcode tidak ditemukan');
+    //     }
 
-        // // Generate QR Code
-        // $dns1d = new DNS1D();
-        // $barcodeBase64 = $dns1d->getBarcodePNG($detail->barcode->barcode, 'C128A', 3, 30);
-        // $barcodeData = 'data:image/png;base64,' . $barcodeBase64;
-        // $dns2d = new DNS2D();
-        // $barcodeBase64 = $dns2d->getBarcodePNG($detail->id_barcode, 'QRCODE');
-        // $barcodeData = 'data:image/png;base64,' . $barcodeBase64;
-
-        return view('admin.pembelian.print_barcode', [
-            'detail' => $detail,
-            //'barcodeData' => $barcodeData
-        ]);
-    }
+    //     return view('admin.pembelian.print_barcode', [
+    //         'detail' => $detail,
+    //     ]);
+    // }
         
 
 }

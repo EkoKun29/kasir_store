@@ -12,8 +12,8 @@ class PembelianController extends Controller
     // Menampilkan daftar pembelian
     public function index()
     {
-        $pembelians = Pembelian::where('id_user', auth()->id())->get();
-        return view('admin.pembelian.index', compact('pembelians'));
+        $pembelian = Pembelian::all();
+        return view('admin.pembelian.index', compact('pembelian'));
     }
 
     // Menampilkan form pembelian
@@ -34,7 +34,7 @@ class PembelianController extends Controller
         $pembelian = Pembelian::create([
             'tanggal_beli' => $request->tanggal_beli,
             'supplier' => $request->supplier,
-            'total_harga' => 0, // Awalnya total harga di-set 0
+            'total_harga' => 0,
             'id_user' => auth()->id(),
         ]);
 
@@ -54,49 +54,46 @@ class PembelianController extends Controller
     public function createDetail($id)
     {
         $pembelian = Pembelian::findOrFail($id);
-        return view('admin.pembelian.create_detail', compact('pembelian'));
+        $detailPembelians = DetailPembelian::where('pembelian_id', $id)->get();
+        return view('admin.pembelian.create_detail', compact('pembelian', 'detailPembelians'));
     }
 
     // Proses penyimpanan data detail pembelian
-    public function storeDetail(Request $request, $id)
+    public function storeDetail(Request $request)
     {
-        // dd($request->harga);
-        $pembelian = Pembelian::find($id);
-        $request->validate([
-            'produk.*' => 'required|string|max:255',
-            'harga.*' => 'required|numeric|min:0',
-            'qty.*' => 'required|integer|min:1',
-        ]);
 
-        $totalHarga = 0;
+        $pembelian = Pembelian::find($request->pembelian_id);
 
-        // Iterasi setiap produk yang diinputkan
-        
+            if (!$pembelian) {
+                return redirect()->back()->with('error', 'Data pembelian tidak ditemukan!');
+            }
 
-            // Simpan data ke tabel Barcode
-            $barcode = Barcode::create([
-                'produk' => $request->produk,
-                'tanggal_beli' => $pembelian->tanggal_beli,
-                'harga_beli' => $request->harga,
-                'qty' => $request->qty,
-                'hpp' => $request->harga / $request->qty,
-            ]);
+            // Simpan detail pembelian
+            $detailPembelian = new DetailPembelian;
+            $detailPembelian->pembelian_id = $request->pembelian_id;
+            $detailPembelian->produk = $request->produk;
+            // $detailPembelian->tanggal_beli = $pembelian->tanggal_beli; 
+            $detailPembelian->harga = $request->harga;
+            $detailPembelian->qty = $request->qty;
+            $detailPembelian->subtotal = $request->harga * $request->qty;
+            $detailPembelian->save();
 
-            // Simpan data ke tabel detail_pembelians
-            DetailPembelian::create([
-                'pembelian_id' => $id,
-                'produk' => $barcode->produk,
-                'harga' => $barcode->harga_beli,
-                'qty' => $barcode->qty,
-                'subtotal' => $barcode->harga_beli * $barcode->qty,
-                'barcode_id' => $barcode->id,
-            ]);
+            $pembelian->total_harga +=$detailPembelian->subtotal;
+            $pembelian->save();
 
-            // $totalHarga += $subtotal;
-            // // Update total harga di tabel pembelian
-            // $pembelian->update(['total_harga' => $totalHarga]);
-        
-        return redirect()->back()
+            $dataBarcode = new Barcode;
+            $dataBarcode->produk = $detailPembelian->produk;
+            $dataBarcode->tanggal_beli = $pembelian->tanggal_beli;
+            $dataBarcode->harga_beli = $detailPembelian->harga ;
+            $dataBarcode->qty = $detailPembelian->qty;
+            $dataBarcode->hpp = $dataBarcode->harga_beli / $dataBarcode->qty;
+            $dataBarcode->save();
+
+            $detailPembelian->barcode_id = $dataBarcode->id;
+            $detailPembelian->save(); 
+
+
+        return redirect()->route('pembelian.detail.create', $detailPembelian->pembelian->id)
             ->with('success', 'Detail pembelian berhasil ditambahkan dengan beberapa produk!');
     }
 
