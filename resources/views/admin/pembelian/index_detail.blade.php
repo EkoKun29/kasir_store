@@ -17,7 +17,6 @@
             </thead>
             <?php $no =1; ?>
             <tbody>
-                @if($pembelian->detailPembelian->isNotEmpty())
                     @foreach($pembelian->detailPembelian as $key => $detail)
                     <tr>
                         <td>{{ $no++ }}</td>
@@ -27,19 +26,14 @@
                         <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('pembelian.edit-detail', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            {{-- <form action="{{ route('detailPembelian.destroy', $detail->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('pembelian.destroy-detail', $detail->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus</button>
-                            </form> --}}
+                            </form>
                         </td>
                     </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td colspan="5" class="text-center">Data tidak tersedia</td>
-                    </tr>
-                @endif
             </tbody>
         </table>
 

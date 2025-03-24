@@ -57,6 +57,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('pembelian-edit-detail/{id}', [PembelianController::class, 'editDetail'])->name('pembelian.edit-detail');
     Route::put('pembelian-update-detail/{id}', [PembelianController::class, 'updateDetail'])->name('pembelian.updateDetail');
     Route::delete('pembelian/{id}', [PembelianController::class, 'destroy'])->name('pembelian.destroy');
+    Route::delete('pembelian-detail/{id}', [PembelianController::class, 'destroyDetail'])->name('pembelian.destroy-detail');
 });
 
 

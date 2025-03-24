@@ -164,27 +164,17 @@ class PembelianController extends Controller
                           ->with('success', 'Data pembelian berhasil dihapus.');
      }
 
-    //  private function updateTotalHarga($pembelianId)
-    // {
-    //     $pembelian = Pembelian::find($pembelianId);
-
-    //     if ($pembelian) {
-    //         $totalHarga = DetailPembelian::where('pembelian_id', $pembelianId)->sum('subtotal');
-    //         $pembelian->update(['total_harga' => $totalHarga]);
-    //     }
-    // }
 
     public function destroyDetail($id)
     {
-        $detailPembelian = DetailPembelian::findOrFail($id);
+        $detailPembelian = DetailPembelian::find($id);
 
-        $pembelianId = $detailPembelian->pembelian_id;
+        $pembelian = Pembelian::find($detailPembelian->pembelian_id);
+        $pembelian->total_harga -= $detailPembelian->subtotal;
+        $pembelian->save();
         $detailPembelian->delete();
 
-        $this->updateTotalHarga($pembelianId);
-
-        return redirect()->route('pembelian.detail.create', $pembelianId)
-            ->with('success', 'Detail pembelian berhasil dihapus.');
+        return redirect()->back()->with('success', 'Data pembelian berhasil dihapus.');
     }
 
 
