@@ -19,11 +19,17 @@ class Pembelian extends Model
     ];
     public function detailPembelian()
     {
-        return $this->hasMany(DetailPembelian::class, 'pembelian_id');
+        return $this->hasMany(DetailPembelian::class);
     }
 
     public function barcode()
     {
-        return $this->hasOne(Barcode::class, 'detail_pembelian_id');
+        return $this->hasOne(Barcode::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }

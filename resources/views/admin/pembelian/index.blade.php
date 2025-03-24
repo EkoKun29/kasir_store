@@ -29,7 +29,7 @@
                 <td>{{ $no++ }}</td>
                 <td>{{ $detail->supplier }}</td>
                 <td>{{ \Carbon\Carbon::parse($detail->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
-                <td>Rp {{  $detail->total_harga }}</td>
+                <td>Rp {{ number_format($detail->total_harga, 0, ',', '.') }}</td>
                 <td>
                     <a href="{{ route('pembelian.edit', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $detail->id }})">

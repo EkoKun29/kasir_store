@@ -136,15 +136,18 @@ class PembelianController extends Controller
      }
      
      public function updateDetail(Request $request, $id){
-        $detailPembelian = DetailPembelian::find($id);
+        $detailPembelian = DetailPembelian::findOrFail($id);
+        $pembelian = Pembelian::findOrFail($detailPembelian->pembelian_id);
+
+        $subtotalLama = $detailPembelian->subtotal;
+
         $detailPembelian->produk = $request->produk;
         $detailPembelian->harga = $request->harga;
         $detailPembelian->qty = $request->qty;
-        $detailPembelian->subtotal = $request->harga * $detailPembelian->qty;
+        $detailPembelian->subtotal = $request->harga * $request->qty;
         $detailPembelian->save();
 
-        $pembelian = Pembelian::find($detailPembelian->pembelian_id);
-        $pembelian->total_harga +=$detailPembelian->subtotal;
+        $pembelian->total_harga = ($pembelian->total_harga - $subtotalLama) + $detailPembelian->subtotal;
         $pembelian->save();
         
         return redirect()->route('pembelian.detail', $detailPembelian->pembelian_id)

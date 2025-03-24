@@ -51,21 +51,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('pembelian/detail/store', [PembelianController::class, 'storeDetail'])->name('pembelian.detail.store');
     //Route::put('pembelian/{id}/detail/update', [DetailPembelianController::class, 'update'])->name('pembelian.detail.update');
     Route::delete('/pembelian/detail/{id}', [PembelianController::class, 'destroyDetail'])->name('pembelian.detail.destroy');
-
+    Route::get('/pembelian/{id}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
+    Route::get('pembelian/{id}/edit', [PembelianController::class, 'edit'])->name('pembelian.edit');
+    Route::put('pembelian/{id}', [PembelianController::class, 'update'])->name('pembelian.update');
+    Route::get('pembelian-edit-detail/{id}', [PembelianController::class, 'editDetail'])->name('pembelian.edit-detail');
+    Route::put('pembelian-update-detail/{id}', [PembelianController::class, 'updateDetail'])->name('pembelian.updateDetail');
+    Route::delete('pembelian/{id}', [PembelianController::class, 'destroy'])->name('pembelian.destroy');
 });
 
-// Route::get('pembelian', [DetailPembelianController::class, 'index'])->name('pembelian.index');
-// Route::get('detailPembelian/{id}/edit', [DetailPembelianController::class, 'edit'])->name('detailPembelian.edit');
-// Route::delete('detailPembelian/{id}', [DetailPembelianController::class, 'destroy'])->name('detailPembelian.destroy');
-// Route::put('DetailPembelian/{id}', [DetailPembelianController::class, 'update'])->name('detailPembelian.update');
 
-//pembelian (supplier)
-Route::get('/pembelian/{id}/detail', [PembelianController::class, 'show'])->name('pembelian.detail');
-Route::get('pembelian/{id}/edit', [PembelianController::class, 'edit'])->name('pembelian.edit');
-Route::put('pembelian/{id}', [PembelianController::class, 'update'])->name('pembelian.update');
-Route::get('pembelian-edit-detail/{id}', [PembelianController::class, 'editDetail'])->name('pembelian.edit-detail');
-Route::put('pembelian-update-detail/{id}', [PembelianController::class, 'updateDetail'])->name('pembelian.updateDetail');
-Route::delete('pembelian/{id}', [PembelianController::class, 'destroy'])->name('pembelian.destroy');
+
 
 //detail QR
 Route::get('/produk/{id}/detail', [BarcodeController::class, 'showDetail'])->name('produk.detail');

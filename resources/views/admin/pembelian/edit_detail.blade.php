@@ -8,7 +8,7 @@
         <form action="{{ route('pembelian.updateDetail', $detailPembelian->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <input type="hidden" name="beli_id" value="{{ $detailPembelian->pembelian_id }}">
+            <input type="hidden" name="beli_id" value="{{ $detailPembelian->pembelian->id }}">
             <div class="mb-3">
                 <label for="produk" class="form-label">Produk</label>
                 <input type="text" class="form-control" id="produk" name="produk" value="{{ $detailPembelian->produk }}" required>

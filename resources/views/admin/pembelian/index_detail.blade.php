@@ -22,9 +22,9 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $detail->produk }}</td>
-                        <td>Rp. {{ number_format($detail->harga, 2) }}</td>
+                        <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
                         <td>{{ $detail->qty }}</td>
-                        <td>Rp. {{ number_format($detail->subtotal, 2) }}</td>
+                        <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('pembelian.edit-detail', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             {{-- <form action="{{ route('detailPembelian.destroy', $detail->id) }}" method="POST" style="display:inline;">
