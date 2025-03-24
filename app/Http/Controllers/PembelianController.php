@@ -172,6 +172,9 @@ class PembelianController extends Controller
         $pembelian = Pembelian::find($detailPembelian->pembelian_id);
         $pembelian->total_harga -= $detailPembelian->subtotal;
         $pembelian->save();
+
+        $dataBarcode = Barcode::find($detailPembelian->barcode_id);
+        $dataBarcode->delete();
         $detailPembelian->delete();
 
         return redirect()->back()->with('success', 'Data pembelian berhasil dihapus.');
