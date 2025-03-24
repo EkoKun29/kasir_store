@@ -28,17 +28,7 @@
                 <td>{{ $no++ }}</td>
                 <td>{{ $detail->supplier }}</td>
                 <td>{{ \Carbon\Carbon::parse($detail->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
-                {{-- <td>{{ $detail->produk }}</td>
-                <td>Rp. {{ number_format($detail->harga, 2) }}</td>
-                <td>{{ $detail->qty }}</td>
-                <td>Rp. {{ number_format($detail->subtotal, 2) }}</td> --}}
-                {{-- <td>
-                    @if($detail->barcode_id)
-                        {{ $detail->barcode_id }}
-                    @else
-                        <span class="text-danger">Belum Tersedia</span>
-                    @endif
-                </td> --}}
+              
                 <td>
                     <a href="{{ route('pembelian.edit', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $detail->id }})">
@@ -50,6 +40,13 @@
                         @method('DELETE')
                     </form>
                      
+                    <a href="{{ route('pembelian.detail', $detail->id) }}" 
+                        class="btn btn-success btn-sm" 
+                        style="margin-top: 5px">
+                        Detail
+                     </a>
+                     
+                      
                 </td>
             </tr>
             @endforeach

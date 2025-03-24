@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\Barcode;
 use App\Models\DetailPembelian;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,11 @@ class Pembelian extends Model
     ];
     public function detailPembelian()
     {
-        return $this->hasMany(DetailPembelian::class);
+        return $this->hasMany(DetailPembelian::class, 'pembelian_id');
+    }
+
+    public function barcode()
+    {
+        return $this->hasOne(Barcode::class, 'detail_pembelian_id');
     }
 }

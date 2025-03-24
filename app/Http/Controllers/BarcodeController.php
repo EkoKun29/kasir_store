@@ -83,7 +83,6 @@ class BarcodeController extends Controller
         return redirect()->route('barcode.index')->with('success', 'Data barcode berhasil dihapus!');
     }
     
-    
     public function showBarcode($id)
     {
         $detail = DetailPembelian::with('barcode')->findOrFail($id);
@@ -94,5 +93,12 @@ class BarcodeController extends Controller
 
         return view('admin.barcode.print_barcode', compact('detail'));
     }
-    
+
+    public function showDetail($id)
+    {
+        $detail = DetailPembelian::findOrFail($id);
+
+        return view('admin.barcode.detail_produk', compact('detail'));
+    }
+
 }

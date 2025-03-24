@@ -62,10 +62,16 @@
         integrity="sha512-NFUcDlm4V+a2sjPX7gREIXgCSFja9cHtKPOL1zj6QhnE0vcY695MODehqkaGYTLyL2wxe/wtr4Z49SvqXq12UQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
+{{-- <script>
     jQuery('#qrcode').qrcode({
         width: 120,
         height: 120,
         text: "{{ $detail->id_barcode }}"
     });
+</script> --}}
+<script>jQuery('#qrcode').qrcode({
+    width: 120,
+    height: 120,
+    text: "{{ route('produk.detail', ['id' => $detail->id]) }}"
+});
 </script>

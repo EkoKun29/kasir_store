@@ -97,4 +97,44 @@ class PembelianController extends Controller
             ->with('success', 'Detail pembelian berhasil ditambahkan dengan beberapa produk!');
     }
 
+    public function show($id)
+    {
+        $pembelian = Pembelian::with('detailPembelian')->findOrFail($id);
+    
+        if ($pembelian->detailPembelian->isEmpty()) {
+            return back()->with('error', 'Data detail pembelian tidak ditemukan');
+        }
+    
+        return view('admin.pembelian.index_detail', compact('pembelian'));
+    }    
+
+     public function edit($id)
+     {
+         $pembelian = Pembelian::findOrFail($id);
+         return view('admin.pembelian.edit', compact('pembelian'));
+     }
+ 
+     public function update(Request $request, $id)
+     {
+         $request->validate([
+             'supplier' => 'required|string|max:255',
+             'tanggal_beli' => 'required|date',
+             'total_harga' => 'required|numeric',
+         ]);
+ 
+         $pembelian = Pembelian::findOrFail($id);
+         $pembelian->update($request->all());
+ 
+         return redirect()->route('pembelian.index')
+                          ->with('success', 'Data pembelian berhasil diperbarui.');
+     }
+ 
+     public function destroy($id)
+     {
+         $pembelian = Pembelian::findOrFail($id);
+         $pembelian->delete();
+ 
+         return redirect()->route('pembelian.index')
+                          ->with('success', 'Data pembelian berhasil dihapus.');
+     }
 }
