@@ -89,15 +89,15 @@ class BarcodeController extends Controller
     
     public function showBarcode($id)
     {
-        $detail = Barcode::findOrFail($id);
+        $barcode = Barcode::findOrFail($id);
 
         // dd($detail);
 
-        if (!$detail) {
+        if (!$barcode) {
             return back()->with('error', 'Data barcode tidak ditemukan');
         }
 
-        return view('admin.barcode.print_barcode', compact('detail'));
+        return view('admin.barcode.print_barcode', compact('barcode'));
     }
 
     public function showDetail($id)

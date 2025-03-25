@@ -3,18 +3,18 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{{ asset ('assets/img/logo.png') }}" alt="">
-        <span class="d-none d-lg-block">Sistem Kasir</span>
+        <img src="#" alt="">
+        <span class="d-none d-lg-block">Kasir Store</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    {{-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
-    </div><!-- End Search Bar -->
+    </div><!-- End Search Bar --> --}}
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -25,14 +25,14 @@
           </a>
         </li><!-- End Search Icon-->
 
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
+          </a><!-- End Notification Icon --> --}}
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          {{-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have 4 new notifications
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -98,9 +98,9 @@
 
           </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav -->
+        </li><!-- End Notification Nav --> --}}
 
-        <li class="nav-item dropdown">
+        {{-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
@@ -162,7 +162,7 @@
               <a href="#">Show all messages</a>
             </li>
 
-          </ul><!-- End Messages Dropdown Items -->
+          </ul><!-- End Messages Dropdown Items --> --}}
 
         </li><!-- End Messages Nav -->
 
@@ -170,19 +170,19 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{ asset ('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{ auth()->user()->name }}</h6>
+              <span>{{ auth()->user()->role }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li>
+            {{-- <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
@@ -190,9 +190,9 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
 
-            <li>
+            {{-- <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
@@ -210,7 +210,7 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
+            </li> --}}
 
             <li>
                 <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-flex align-items-center">

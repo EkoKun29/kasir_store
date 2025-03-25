@@ -24,6 +24,11 @@
                 <input type="number" class="form-control" id="qty" name="qty" value="{{ $detailPembelian->qty }}" required>
             </div>
 
+            <div class="mb-3">
+                <label for="harga_jual" class="form-label">Harga Jual</label>
+                <input type="number" class="form-control" id="harga_jual" name="harga" value="{{ $detailPembelian->harga_jual }}" required>
+            </div>
+
             {{-- <div class="mb-3">
                 <label for="subtotal" class="form-label">Subtotal</label>
                 <input type="number" class="form-control" id="subtotal" name="subtotal" value="{{ $detailPembelian->subtotal }}" required>

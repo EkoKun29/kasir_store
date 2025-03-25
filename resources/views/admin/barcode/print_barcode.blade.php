@@ -49,7 +49,8 @@
 <body onload="window.print();">
     <div class="container">
         <div id="qrcode"></div>
-        <p class="barcode-text"><strong>Produk:</strong> {{ $detail->produk }}</p>
+        <p class="barcode-text"><strong>Produk:</strong> {{ $barcode->produk }}</p>
+        {{-- <p class="barcode-text"><strong>Harga Jual:</strong> {{ $barcode->harga_jual }}</p> --}}
     </div>
 </body>
 </html>
@@ -66,6 +67,6 @@
     jQuery('#qrcode').qrcode({
         width: 120,
         height: 120,
-        text: "{{ $detail->id }}"
+        text: "{{ $barcode->id }}"
     });
 </script>

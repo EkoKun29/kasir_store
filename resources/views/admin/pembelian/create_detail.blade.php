@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="harga">Harga</label>
+                            <label for="harga">Harga Beli</label>
                             <input type="number" class="form-control" name="harga" min="1" required>
                         </div>
                     </div>
@@ -28,6 +28,12 @@
                         <div class="form-group">
                             <label for="qty">Jumlah (Qty)</label>
                             <input type="number" class="form-control" name="qty" min="1" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="harga_jual">Harga Jual</label>
+                            <input type="number" class="form-control" name="harga_jual" min="1" required>
                         </div>
                     </div>
                 </div>
@@ -50,7 +56,7 @@
                         <th>Harga</th>
                         <th>Qty</th>
                         <th>Subtotal</th>
-                        <th>Aksi</th>
+                        <th>Harga Jual</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,13 +67,16 @@
                                     {{ $item->produk }}
                                 </td>
                                 <td>
-                                   {{ $item->harga }} 
+                                   Rp. {{ $item->harga }} 
                                 </td>
                                 <td>
                                     {{ $item->qty }}
                                 </td>
                                 <td>
-                                    {{ $item->subtotal }}
+                                    Rp. {{ $item->subtotal }}
+                                </td>
+                                <td>
+                                    Rp. {{ $item->harga_jual }}
                                 </td>
                             </tr>
                         @endforeach

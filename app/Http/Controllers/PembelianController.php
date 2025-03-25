@@ -76,6 +76,7 @@ class PembelianController extends Controller
             $detailPembelian->harga = $request->harga;
             $detailPembelian->qty = $request->qty;
             $detailPembelian->subtotal = $request->harga * $request->qty;
+            $detailPembelian->harga_jual = $request->harga_jual;
             $detailPembelian->save();
 
             $pembelian->total_harga +=$detailPembelian->subtotal;
@@ -88,6 +89,7 @@ class PembelianController extends Controller
             $dataBarcode->harga_beli = $detailPembelian->harga ;
             $dataBarcode->qty = $detailPembelian->qty;
             $dataBarcode->hpp = $dataBarcode->harga_beli / $dataBarcode->qty;
+            $dataBarcode->harga_jual = $detailPembelian->harga_jual;
             $dataBarcode->save();
 
             $detailPembelian->barcode_id = $dataBarcode->id;
@@ -145,6 +147,7 @@ class PembelianController extends Controller
         $detailPembelian->harga = $request->harga;
         $detailPembelian->qty = $request->qty;
         $detailPembelian->subtotal = $request->harga * $request->qty;
+        $detailPembelian->harga_jual = $request->harga_jual;
         $detailPembelian->save();
 
         $pembelian->total_harga = ($pembelian->total_harga - $subtotalLama) + $detailPembelian->subtotal;

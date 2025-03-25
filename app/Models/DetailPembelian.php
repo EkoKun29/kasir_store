@@ -17,6 +17,7 @@ class DetailPembelian extends Model
         'harga',
         'qty',
         'subtotal',
+        'harga_jual',
         'barcode_id'
     ];
 

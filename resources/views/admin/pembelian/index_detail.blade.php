@@ -12,6 +12,7 @@
                     <th>Harga</th>
                     <th>Qty</th>
                     <th>Subtotal</th>
+                    {{-- <th>Harga Jual</th> --}}
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -24,12 +25,21 @@
                         <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
                         <td>{{ $detail->qty }}</td>
                         <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
+                        {{-- <td>Rp {{ number_format($detail->harga_jual, 0, ',', '.') }}</td> --}}
                         <td>
                             <a href="{{ route('pembelian.edit-detail', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('pembelian.destroy-detail', $detail->id) }}" method="POST" style="display:inline;">
+                            {{-- <form action="{{ route('pembelian.destroy-detail', $detail->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus</button>
+                            </form> --}}
+                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $detail->id }})">
+                                Hapus
+                            </button>
+                            
+                            <form id="delete-form-{{ $detail->id }}" action="{{ route('pembelian.destroy-detail', $detail->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
                             </form>
                         </td>
                     </tr>

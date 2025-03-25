@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\HargaJualController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DetailPembelianController;
@@ -60,10 +61,14 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::delete('pembelian-detail/{id}', [PembelianController::class, 'destroyDetail'])->name('pembelian.destroy-detail');
 });
 
+//harga jual
+Route::get('/hargajual', [HargaJualController::class, 'index'])->name('hargajual.index');
+Route::get('/hargajual/create', [HargaJualController::class, 'create'])->name('hargajual.create');
+Route::post('/hargajual/store', [HargaJualController::class, 'store'])->name('hargajual.store');
+Route::get('/hargajual/{id}/edit', [HargaJualController::class, 'edit'])->name('hargajual.edit');
+Route::put('/hargajual/{id}', [HargaJualController::class, 'update'])->name('hargajual.update');
+Route::delete('/hargajual/{id}', [HargaJualController::class, 'destroy'])->name('hargajual.destroy');
 
-
-//detail QR
-// Route::get('/produk/{id}/detail', [BarcodeController::class, 'showDetail'])->name('produk.detail');
 
 
 
