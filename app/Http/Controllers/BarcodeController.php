@@ -89,11 +89,11 @@ class BarcodeController extends Controller
     
     public function showBarcode($id)
     {
-        $detail = DetailPembelian::with('barcode')->findOrFail($id);
+        $detail = Barcode::findOrFail($id);
 
         // dd($detail);
 
-        if (!$detail->barcode) {
+        if (!$detail) {
             return back()->with('error', 'Data barcode tidak ditemukan');
         }
 

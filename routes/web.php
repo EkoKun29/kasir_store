@@ -62,9 +62,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 
 
-
 //detail QR
-Route::get('/produk/{id}/detail', [BarcodeController::class, 'showDetail'])->name('produk.detail');
+// Route::get('/produk/{id}/detail', [BarcodeController::class, 'showDetail'])->name('produk.detail');
 
 
 
