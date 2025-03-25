@@ -12,6 +12,7 @@ class Barcode extends Model
         'produk',
         'tanggal_beli',
         'harga_beli',
+        'harga_jual',
         'qty',
         'hpp',
     ];

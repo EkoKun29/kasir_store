@@ -16,6 +16,7 @@
                     <th>Harga Beli</th>
                     <th>Qty</th>
                     <th>Hpp</th>
+                    <th>Harga Jual</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td>Rp. {{ number_format($barcode->harga_beli, 2, ',', '.') }}</td>
                     <td>{{ $barcode->qty }}</td>
                     <td>{{ $barcode->hpp }}</td>
+                    <td>Rp. {{ number_format($barcode->harga_jual, 2, ',', '.') }}</td>
                     <td>
                         <a href="{{ route('barcode.edit', $barcode->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $barcode->id }})">

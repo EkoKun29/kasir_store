@@ -26,8 +26,9 @@ class BarcodeController extends Controller
     {
         $request->validate([
             'produk' => 'required|string|max:255',
-            'tanggal_beli' => 'required|date',
-            'harga_beli' => 'required|numeric|min:1',
+            'tanggal_beli' => 'nullable|date',
+            'harga_beli' => 'nullable|numeric|min:1',
+            'harga_jual' => 'nullable|numeric|min:1',
             'qty' => 'required|integer|min:1',
         ]);
 
@@ -38,6 +39,7 @@ class BarcodeController extends Controller
             'produk' => $request->produk,
             'tanggal_beli' => $request->tanggal_beli,
             'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
             'qty' => $request->qty,
             'hpp' => $hpp,
         ]);
@@ -55,9 +57,10 @@ class BarcodeController extends Controller
     {
         $request->validate([
             'produk' => 'required|string',
-            'tanggal_beli' => 'required|date',
-            'harga_beli' => 'required|numeric|min:1',
-            'qty' => 'required|integer|min:1',
+            'tanggal_beli' => 'nullable|date',
+            'harga_beli' => 'nullable|numeric|min:1',
+            'harga_jual' => 'nullable|numeric|min:1',
+            'qty' => 'nullable|integer|min:1',
         ]);
 
         // Hitung HPP secara otomatis
@@ -68,6 +71,7 @@ class BarcodeController extends Controller
             'produk' => $request->produk,
             'tanggal_beli' => $request->tanggal_beli,
             'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
             'qty' => $request->qty,
             'hpp' => $hpp,
         ]);
@@ -110,6 +114,7 @@ class BarcodeController extends Controller
         $jual->produk = $barcode->produk;
         $jual->harga_beli = $barcode->harga_beli;
         $jual->hpp = $barcode->hpp;
+        $jual->harga_jual = $barcode->harga_jual;
         $jual->qty = 1;
         $jual->save();
 

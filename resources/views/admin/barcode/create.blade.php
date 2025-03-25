@@ -17,12 +17,12 @@
                         </div>
                         <div class="form-group">
                             <label for="tanggal_beli">Tanggal Beli</label>
-                            <input type="date" class="form-control" id="tanggal_beli" name="tanggal_beli" required>
+                            <input type="date" class="form-control" id="tanggal_beli" name="tanggal_beli">
                         </div>
                         <div class="form-group">
                             <label for="harga_beli">Harga Beli</label>
                             <input type="number" class="form-control" id="harga_beli" name="harga_beli" min="1" 
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         </div>
                         <div class="form-group">
                             <label for="qty">Jumlah (Qty)</label>

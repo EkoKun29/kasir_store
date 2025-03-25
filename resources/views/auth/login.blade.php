@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login</title>
+    <title>Login - Kasir Store</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
@@ -83,7 +83,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Login</h2>
+        <h2>Login <br> Kasir Store</h2>
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
