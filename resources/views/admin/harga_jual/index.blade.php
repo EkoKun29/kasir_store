@@ -11,8 +11,9 @@
                 <tr>
                     <th>No</th>
                     <th>Produk</th>
-                    <th>Qty</th>
+                    <th>Tanggal Beli</th>
                     <th>Harga Jual</th>
+                    <th>Stok</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -21,14 +22,23 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $barcode->produk }}</td>
-                    <td>{{ $barcode->qty }}</td>
+                    <td>{{ $barcode->tanggal_beli ? \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d-m-Y') : 'Null' }}</td>
                     <td>Rp. {{ number_format($barcode->harga_jual, 0, ',', '.') }}</td>
+                    <td>Stok</td>
                     <td>
-                        <a href="{{ route('hargajual.edit', $barcode->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('hargajual.destroy', $barcode->id) }}" method="POST" class="d-inline">
+                        <a href="{{ route('hargajual.edit', $barcode->id) }}" class="btn btn-warning btn-sm">Revisi Harga Jual</a>
+                        {{-- <form action="{{ route('hargajual.destroy', $barcode->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                        </form> --}}
+                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $barcode->id }})">
+                            Hapus
+                        </button>
+                        
+                        <form id="delete-form-{{ $barcode->id }}" action="{{ route('hargajual.destroy', $barcode->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
                         </form>
                     </td>
                 </tr>

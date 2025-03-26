@@ -33,10 +33,10 @@
                 <input type="number" class="form-control" id="qty" name="qty" value="{{ $barcode->qty }}">
             </div>
             
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="harga_beli">Harga Jual</label>
                 <input type="number" class="form-control" id="harga_jaul" name="harga_jual" min="1" value="{{ $barcode->harga_jual }}">
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-primary" style="margin-top: 10px">Simpan Perubahan</button>
             <a href="{{ route('barcode.index') }}" class="btn btn-secondary" style="margin-top: 10px">Batal</a>

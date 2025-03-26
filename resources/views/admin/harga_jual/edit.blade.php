@@ -14,10 +14,10 @@
                 <input type="text" name="produk" class="form-control" value="{{ $barcode->produk }}" readonly>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="qty">Qty</label>
                 <input type="number" name="qty" class="form-control" value="{{ $barcode->qty }}" readonly>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label for="harga_jual">Harga Jual</label>

@@ -11,7 +11,7 @@
                 <label for="barcode_id">Produk</label>
                 <select name="barcode_id" class="form-control">
                     @foreach ($barcodes as $barcode)
-                        <option value="{{ $barcode->id }}">{{ $barcode->produk }}</option>
+                        <option value="{{ $barcode->id }}">{{ $barcode->id }} - {{ $barcode->produk }}</option>
                     @endforeach
                 </select>
             </div>
