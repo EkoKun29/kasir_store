@@ -120,4 +120,17 @@ class BarcodeController extends Controller
 
     }
 
+    public function getDetails($barcode_id)
+{
+    $barcode = Barcode::where('id', $barcode_id)->first();
+    
+    if (!$barcode) {
+        return response()->json(['error' => 'Barcode tidak ditemukan']);
+    }
+    
+    return response()->json([
+        'produk' => $barcode->produk,
+        'harga_jual' => $barcode->harga_jual
+    ]);
+}
 }

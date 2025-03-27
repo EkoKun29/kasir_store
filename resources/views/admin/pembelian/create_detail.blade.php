@@ -33,7 +33,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="harga_jual">Harga Jual</label>
-                            <input type="number" class="form-control" name="harga_jual" min="1" required>
+                            <input type="number" class="form-control" name="harga_jual" min="1">
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,7 @@
                         <th>Qty</th>
                         <th>Subtotal</th>
                         <th>Harga Jual</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,17 @@
                                 </td>
                                 <td>
                                     Rp. {{ $item->harga_jual }}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm">
+                                        Hapus
+                                    </button>
+                    
+                                    <a href="#" 
+                                        class="btn btn-success btn-sm" 
+                                        style="margin-top: 5px">
+                                        Cetak Barcode
+                                    </a>          
                                 </td>
                             </tr>
                         @endforeach

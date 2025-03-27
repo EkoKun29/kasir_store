@@ -160,11 +160,15 @@ class PembelianController extends Controller
  
      public function destroy($id)
      {
-         $pembelian = Pembelian::findOrFail($id);
-         $pembelian->delete();
+        $pembelian = Pembelian::find($id);
 
-         return redirect()->route('pembelian.index')
-                          ->with('success', 'Data pembelian berhasil dihapus.');
+        foreach($pembelian->detailPembelian as $detail){
+            $detail->barcode->delete();
+            $detail->delete();
+        }
+        $pembelian->delete();
+        
+         return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil dihapus.');
      }
 
 
@@ -180,8 +184,8 @@ class PembelianController extends Controller
         $dataBarcode->delete();
         $detailPembelian->delete();
 
+
         return redirect()->back()->with('success', 'Data pembelian berhasil dihapus.');
     }
-
 
 }
