@@ -29,7 +29,7 @@
                     <td>{{ $barcode->tanggal_beli ? \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d-m-Y') : 'Null' }}</td>
                     <td>Rp. {{ number_format($barcode->harga_beli, 0, ',', '.') }}</td>
                     <td>{{ $barcode->qty }}</td>
-                    <td>{{ $barcode->hpp }}</td>
+                    <td>{{ number_format($barcode->hpp, 2, ',', '.') }}</td>
                     {{-- <td>Rp. {{ number_format($barcode->harga_jual, 0, ',', '.') }}</td> --}}
                     <td>
                         <a href="{{ route('barcode.edit', $barcode->id) }}" class="btn btn-warning btn-sm">Edit</a>
