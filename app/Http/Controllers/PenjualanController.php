@@ -32,11 +32,11 @@ class PenjualanController extends Controller
         ]);
 
         // Buat nomor_surat secara otomatis
-        // $latestPenjualan = Penjualan::orderby('id', 'DESC')->first();
-        // $nomorSurat = 'NPJ-' . $latestPenjualan->id + 1;
-        $latestPenjualan = Penjualan::orderBy('id', 'DESC')->first();
-        $nextId = $latestPenjualan ? $latestPenjualan->id + 1 : 1;
-        $nomorSurat = 'NPJ-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+        $latestPenjualan = Penjualan::orderby('id', 'DESC')->first();
+        $nomorSurat = 'NPJ-' . $latestPenjualan->id + 1;
+        // $latestPenjualan = Penjualan::orderBy('id', 'DESC')->first();
+        // $nextId = $latestPenjualan ? $latestPenjualan->id + 1 : 1;
+        // $nomorSurat = 'NPJ-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
 
         $penjualan = Penjualan::create([
             'nomor_surat' => $nomorSurat,

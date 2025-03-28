@@ -19,6 +19,14 @@
                         <label for="supplier">Supplier</label>
                         <input type="text" class="form-control" name="supplier" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="status_pembelian" class="form-label">Status Pembelian</label>
+                        <select name="status_pembelian" class="form-control">
+                            <option>Cash</option>
+                            <option>Hutang</option>
+                            <option>Transfer</option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary" style="margin-top: 10px">Simpan</button>
                 </form>
             </div>

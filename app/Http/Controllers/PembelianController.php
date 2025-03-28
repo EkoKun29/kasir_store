@@ -28,6 +28,7 @@ class PembelianController extends Controller
         $request->validate([
             'tanggal_beli' => 'required|date',
             'supplier' => 'required|string|max:255',
+            'status_pembelian' => 'required|string'
         ]);
 
         // Simpan data pembelian terlebih dahulu
@@ -36,6 +37,7 @@ class PembelianController extends Controller
             'supplier' => $request->supplier,
             'total_harga' => 0,
             'id_user' => auth()->id(),
+            'status_pembelian' => $request->status_pembelian
         ]);
 
         // Hitung total harga baru
@@ -122,6 +124,7 @@ class PembelianController extends Controller
          $request->validate([
              'supplier' => 'required|string|max:255',
              'tanggal_beli' => 'required|date',
+             'status_pembelian' => 'required|string'
             // 'total_harga' => 'required|numeric',
          ]);
  

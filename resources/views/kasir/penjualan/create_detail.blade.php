@@ -7,6 +7,22 @@
             <h5>Form Input Penjualan</h5>
         </div>
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Nomor Surat:</strong> {{ $penjualan->nomor_surat ?? '-' }}</p>
+                    <p><strong>ID Kios:</strong> {{ $penjualan->id_kios ?? '-' }}</p>
+                    <p><strong>Status Penjualan:</strong> {{ $penjualan->status_penjualan ?? '-' }}</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <p><strong>Tanggal:</strong> 
+                        {{ $penjualan->created_at 
+                            ? $penjualan->created_at->format('d M Y H:i') 
+                            : '-' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
             <div id="product-form">
                 <div class="row">
                     <div class="col-md-3">
@@ -86,6 +102,25 @@
                         <tr>
                             <td colspan="5" class="text-right"><strong>Total:</strong></td>
                             <td id="total-amount">Rp. 0</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="text-right"><strong>Potongan:</strong></td>
+                            <td>
+                                <input type="number" 
+                                       class="form-control" 
+                                       id="potongan-input" 
+                                       name="potongan" 
+                                       min="0" 
+                                       value="0" 
+                                       style="width: 120px;"
+                                >
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="text-right"><strong>Total Setelah Potongan:</strong></td>
+                            <td id="total-setelah-potongan">Rp. 0</td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -232,6 +267,9 @@
         document.getElementById('total-amount').textContent = 
             `Rp. ${totalAmount.toLocaleString('id-ID')}`;
         
+        // Calculate total after discount
+        calculateTotalSetelahPotongan(totalAmount);
+        
         // Add hidden inputs for form submission
         const submitForm = document.getElementById('submit-form');
         
@@ -285,5 +323,31 @@
         // Update tabel
         updateProductsTable();
     }
+
+    // Fungsi untuk menghitung total setelah potongan
+    function calculateTotalSetelahPotongan(totalAmount) {
+        const potonganInput = document.getElementById('potongan-input');
+        const totalSetelahPotonganElement = document.getElementById('total-setelah-potongan');
+        
+        // Tambahkan event listener untuk input potongan
+        potonganInput.addEventListener('input', updatePotongan);
+        
+        function updatePotongan() {
+            const potongan = parseFloat(potonganInput.value) || 0;
+            const totalSetelahPotongan = Math.max(totalAmount - potongan, 0);
+            
+            totalSetelahPotonganElement.textContent = 
+                `Rp. ${totalSetelahPotongan.toLocaleString('id-ID')}`;
+        }
+        
+        // Perhitungan awal
+        updatePotongan();
+    }
+
+    // Inisialisasi perhitungan potongan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        const initialTotal = 0;
+        calculateTotalSetelahPotongan(initialTotal);
+    });
 </script>
 @endsection

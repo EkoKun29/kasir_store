@@ -29,7 +29,7 @@
                         {{-- <th>Barcode</th> --}}
                         <th>Produk</th>
                         <th>Harga</th>
-                        <th>Qty</th>
+                        <th>Pcs</th>
                         <th>Subtotal</th>
                     </tr>
                 </thead>

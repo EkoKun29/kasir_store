@@ -5,13 +5,13 @@
     <style>
         @media print {
             @page {
-                size: 80mm 60mm;
+                size: 60mm 40mm;
                 margin: 0; 
             }
 
             body, html {
-                width: 80mm;
-                height: 60mm;
+                width: 60mm;
+                height: 40mm;
                 margin: 0;
                 padding: 0;
                 display: flex;
@@ -65,8 +65,8 @@
 
 <script>
     jQuery('#qrcode').qrcode({
-        width: 120,
-        height: 120,
+        width: 80,
+        height: 80,
         text: "{{ $barcode->id }}"
     });
 </script>

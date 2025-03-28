@@ -30,8 +30,9 @@
                         <div class="mb-3">
                             <label for="status_penjualan" class="form-label">Status Penjualan</label>
                             <select name="status_penjualan" class="form-control">
-                                <option>Satuan</option>
-                                <option>Grosir</option>
+                                <option>Cash</option>
+                                <option>Piutang</option>
+                                <option>Transfer</option>
                             
                             </select>
                         </div>

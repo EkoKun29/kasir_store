@@ -15,7 +15,8 @@ class Pembelian extends Model
         'tanggal_beli',
         'supplier',
         'total_harga',
-        'id_user'
+        'id_user',
+        'status_pembelian'
     ];
     public function detailPembelian()
     {

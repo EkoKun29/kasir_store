@@ -68,27 +68,21 @@
                                     {{ $item->produk }}
                                 </td>
                                 <td>
-                                   Rp. {{ $item->harga }} 
+                                   Rp. {{ number_format($item->harga, 0, ',', '.') }}
                                 </td>
                                 <td>
                                     {{ $item->qty }}
                                 </td>
                                 <td>
-                                    Rp. {{ $item->subtotal }}
+                                    <td>Rp. {{ number_format($item->subtotal, 0, ',', '.') }}</td>
                                 </td>
                                 <td>
-                                    Rp. {{ $item->harga_jual }}
+                                    <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-danger btn-sm">
                                         Hapus
-                                    </button>
-                    
-                                    <a href="#" 
-                                        class="btn btn-success btn-sm" 
-                                        style="margin-top: 5px">
-                                        Cetak Barcode
-                                    </a>          
+                                    </button>         
                                 </td>
                             </tr>
                         @endforeach
