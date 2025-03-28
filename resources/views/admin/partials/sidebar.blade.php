@@ -56,22 +56,36 @@
               <i class="bi bi-circle"></i><span>Lihat Harga Jual</span>
             </a>
           </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
         </ul>
       </li><!-- End Tables Nav -->
 
-      <li class="nav-heading">Pages</li>
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('barcode.create') }}">
-          <i class="bi bi-person"></i>
-          <span>Input Barcode</span>
+        <a class="nav-link collapsed" data-bs-target="#penj-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Penjualan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li><!-- End Profile Page Nav -->
+        <ul id="penj-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('penjualan.create') }}">
+              <i class="bi bi-circle"></i><span>Input Penjualan</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('penjualan.index') }}">
+              <i class="bi bi-circle"></i><span>Daftar Penjualan</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Penjualan Nav -->
+
+      @if(Auth::user()->email === 'admin@gmail.com')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('users.index') }}">
+                <i class="bi bi-person"></i>
+                <span>Akun User</span>
+            </a>
+        </li>
+        @endif
+        <!-- End akun user Nav -->
 
     </ul>
 

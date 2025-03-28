@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\BarcodeController;
@@ -34,16 +35,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kasir/dashboard', [KasirController::class, 'index'])->name('kasir.dashboard')->middleware('role:kasir');
 });
 
-//CRUD barcode
-Route::get('/barcode', [BarcodeController::class, 'index'])->name('barcode.index');
-Route::get('/barcode/create', [BarcodeController::class, 'create'])->name('barcode.create');
-Route::post('/barcode/store', [BarcodeController::class, 'store'])->name('barcode.store');
-Route::get('/barcode/{id}/edit', [BarcodeController::class, 'edit'])->name('barcode.edit');
-Route::put('/barcode/{id}/update', [BarcodeController::class, 'update'])->name('barcode.update');
-Route::delete('/barcode/{id}/delete', [BarcodeController::class, 'destroy'])->name('barcode.destroy');
-//Route::get('/barcode/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
-Route::get('/barcode/show/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
-
 //Pembelian
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
@@ -61,32 +52,69 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('pembelian-update-detail/{id}', [PembelianController::class, 'updateDetail'])->name('pembelian.updateDetail');
     Route::delete('pembelian/{id}', [PembelianController::class, 'destroy'])->name('pembelian.destroy');
     Route::delete('pembelian-detail/{id}', [PembelianController::class, 'destroyDetail'])->name('pembelian.destroy-detail');
-});
 
-//harga jual
-Route::get('/hargajual', [HargaJualController::class, 'index'])->name('hargajual.index');
-Route::get('/hargajual/create', [HargaJualController::class, 'create'])->name('hargajual.create');
-Route::post('/hargajual/store', [HargaJualController::class, 'store'])->name('hargajual.store');
-Route::get('/hargajual/{id}/edit', [HargaJualController::class, 'edit'])->name('hargajual.edit');
-Route::put('/hargajual/{id}', [HargaJualController::class, 'update'])->name('hargajual.update');
-Route::delete('/hargajual/{id}', [HargaJualController::class, 'destroy'])->name('hargajual.destroy');
+    //CRUD barcode
+    Route::get('/barcode', [BarcodeController::class, 'index'])->name('barcode.index');
+    Route::get('/barcode/create', [BarcodeController::class, 'create'])->name('barcode.create');
+    Route::post('/barcode/store', [BarcodeController::class, 'store'])->name('barcode.store');
+    Route::get('/barcode/{id}/edit', [BarcodeController::class, 'edit'])->name('barcode.edit');
+    Route::put('/barcode/{id}/update', [BarcodeController::class, 'update'])->name('barcode.update');
+    Route::delete('/barcode/{id}/delete', [BarcodeController::class, 'destroy'])->name('barcode.destroy');
+    //Route::get('/barcode/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
+    Route::get('/barcode/show/{id}', [BarcodeController::class, 'showBarcode'])->name('barcode.show');
 
-//penjualan kasir
-Route::prefix('kasir/penjualan')->group(function () {
+    //harga jual
+    Route::get('/hargajual', [HargaJualController::class, 'index'])->name('hargajual.index');
+    Route::get('/hargajual/create', [HargaJualController::class, 'create'])->name('hargajual.create');
+    Route::post('/hargajual/store', [HargaJualController::class, 'store'])->name('hargajual.store');
+    Route::get('/hargajual/{id}/edit', [HargaJualController::class, 'edit'])->name('hargajual.edit');
+    Route::put('/hargajual/{id}', [HargaJualController::class, 'update'])->name('hargajual.update');
+    Route::delete('/hargajual/{id}', [HargaJualController::class, 'destroy'])->name('hargajual.destroy');
+
+    //penjualan
     Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
     Route::get('/create', [PenjualanController::class, 'create'])->name('penjualan.create');
     Route::post('/store', [PenjualanController::class, 'store'])->name('penjualan.store');
     Route::get('/edit/{id}', [PenjualanController::class, 'edit'])->name('penjualan.edit');
     Route::put('/update/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
     Route::delete('/delete/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+
+    //detailpenjualan
+    Route::get('/detail-penjualan/create/{penjualan_id}', [DetailPenjualanController::class, 'create'])->name('detail_penjualan.create');
+    Route::post('/detail-penjualan/store', [DetailPenjualanController::class, 'store'])->name('detail_penjualan.store');
+    Route::get('/detail-penjualan/{penjualan_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
+
+    //scan barcode
+    // Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
+    Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
+
+    //user
+    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
-//detailpenjualan
-Route::get('/detail-penjualan/create/{penjualan_id}', [DetailPenjualanController::class, 'create'])->name('detail_penjualan.create');
-Route::post('/detail-penjualan/store', [DetailPenjualanController::class, 'store'])->name('detail_penjualan.store');
-Route::get('/detail-penjualan/{penjualan_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
 
-//scan barcode
-// Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
-Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
+
+// //penjualan kasir
+// Route::prefix('kasir/penjualan')->group(function () {
+//     Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
+//     Route::get('/create', [PenjualanController::class, 'create'])->name('penjualan.create');
+//     Route::post('/store', [PenjualanController::class, 'store'])->name('penjualan.store');
+//     Route::get('/edit/{id}', [PenjualanController::class, 'edit'])->name('penjualan.edit');
+//     Route::put('/update/{id}', [PenjualanController::class, 'update'])->name('penjualan.update');
+//     Route::delete('/delete/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+// });
+
+// //detailpenjualan
+// Route::get('/detail-penjualan/create/{penjualan_id}', [DetailPenjualanController::class, 'create'])->name('detail_penjualan.create');
+// Route::post('/detail-penjualan/store', [DetailPenjualanController::class, 'store'])->name('detail_penjualan.store');
+// Route::get('/detail-penjualan/{penjualan_id}', [DetailPenjualanController::class, 'show'])->name('detail_penjualan.show');
+
+// //scan barcode
+// // Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
+// Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
 
