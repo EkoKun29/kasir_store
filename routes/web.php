@@ -86,7 +86,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     //scan barcode
     // Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
-    Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
+    // Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
 
     //user
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
@@ -116,5 +116,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 // //scan barcode
 // // Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
-// Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
+Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
 

@@ -4,59 +4,18 @@
 <div class="container"> 
     <div class="card mb-4">
         <div class="card-header">
-            <h5>Form Input Penjualan</h5>
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p><strong>Nomor Surat:</strong> {{ $penjualan->nomor_surat ?? '-' }}</p>
-                    <p><strong>ID Kios:</strong> {{ $penjualan->id_kios ?? '-' }}</p>
-                    <p><strong>Status Penjualan:</strong> {{ $penjualan->status_penjualan ?? '-' }}</p>
-                </div>
-                <div class="col-md-6 text-right">
-                    <p><strong>Tanggal:</strong> 
-                        {{ $penjualan->created_at 
-                            ? $penjualan->created_at->format('d M Y H:i') 
-                            : '-' }}
-                    </p>
-                </div>
-            </div>
+            <h5>Form Input Penjualan | {{ $penjualan->nomor_surat ?? '-' }} | {{ $penjualan->id_kios ?? '-' }} | {{ $penjualan->status_penjualan ?? '-' }} </h5>
         </div>
         <div class="card-body">
             <div id="product-form">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="barcode">Barcode ID</label>
-                            <input type="text" class="form-control" id="barcode-input" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="produk">Nama Produk</label>
-                            <input type="text" class="form-control" id="produk-input" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="harga">Harga Jual</label>
-                            <input type="number" class="form-control" id="harga-input" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="pcs">Jumlah (pcs)</label>
-                            <input type="number" class="form-control" id="pcs-input" min="1" required readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="subtotal">Subtotal</label>
-                            <input type="text" class="form-control" id="subtotal-input" readonly>
+                            <label for="barcode">Scan Barcode</label>
+                            <input type="text" class="form-control" id="barcode-input" required autofocus>
                         </div>
                     </div>
                 </div>
-                <button type="button" id="add-to-table" class="btn btn-primary mt-3">Tambah Produk</button>
             </div>
         </div>
     </div>
@@ -100,32 +59,30 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="5" class="text-right"><strong>Total:</strong></td>
-                            <td id="total-amount">Rp. 0</td>
+                            <td colspan="5" class="text-right"><strong>Subtotal:</strong></td>
+                            <td id="subtotal-amount">Rp. 0</td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td colspan="5" class="text-right"><strong>Potongan:</strong></td>
+                            <td colspan="5" class="text-right">
+                                <strong>Potongan:</strong>
+                            </td>
                             <td>
-                                <input type="number" 
-                                       class="form-control" 
-                                       id="potongan-input" 
-                                       name="potongan" 
-                                       min="0" 
-                                       value="0" 
-                                       style="width: 120px;"
-                                >
+                                <input type="number" id="potongan-input" class="form-control" min="0" value="0">
                             </td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td colspan="5" class="text-right"><strong>Total Setelah Potongan:</strong></td>
-                            <td id="total-setelah-potongan">Rp. 0</td>
+                            <td colspan="5" class="text-right"><strong>Total:</strong></td>
+                            <td id="total-amount">Rp. 0</td>
                             <td></td>
                         </tr>
                     </tfoot>
                 </table>
-                <button type="submit" class="btn btn-success mt-3">Simpan Penjualan</button>
+                <input type="hidden" name="subtotal" id="subtotal-hidden">
+                <input type="hidden" name="potongan" id="potongan-hidden">
+                <input type="hidden" name="total" id="total-hidden">
+                <button type="submit" class="btn btn-success mt-3">Simpan & Cetak</button>
             </form>
         </div>
     </div>
@@ -134,113 +91,73 @@
 </div>
 
 <script>
-    // Array to store all products
+    // Array untuk menyimpan semua produk
     let products = [];
     
-    // Fetch barcode details when barcode input changes
-    document.getElementById('barcode-input').addEventListener('change', function() {
-        const barcodeId = this.value;
-        
-        fetch(`/get-barcode-details/${barcodeId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                    this.value = '';
-                    document.getElementById('produk-input').value = '';
-                    document.getElementById('harga-input').value = '';
-                } else {
-                    document.getElementById('produk-input').value = data.produk;
-                    document.getElementById('harga-input').value = data.harga_jual;
-                    
-                    // Add default quantity if not set
-                    if (!document.getElementById('pcs-input').value) {
-                        document.getElementById('pcs-input').value = 1;
+    // Tambahkan event listener untuk input barcode
+    document.getElementById('barcode-input').addEventListener('keypress', function(event) {
+        // Hanya jalankan jika tombol Enter ditekan
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Mencegah form submit
+            const barcodeId = this.value;
+            
+            fetch(`/get-barcode-details/${barcodeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        this.value = '';
+                    } else {
+                        // Cari apakah produk sudah ada di tabel
+                        const existingProductIndex = products.findIndex(p => p.barcode === barcodeId);
+                        
+                        if (existingProductIndex !== -1) {
+                            // Jika produk sudah ada, tambah jumlahnya
+                            products[existingProductIndex].pcs += 1;
+                            products[existingProductIndex].subtotal = 
+                                products[existingProductIndex].harga * products[existingProductIndex].pcs;
+                        } else {
+                            // Tambah produk baru
+                            products.push({
+                                barcode: barcodeId,
+                                produk: data.produk,
+                                harga: data.harga_jual,
+                                pcs: 1,
+                                subtotal: data.harga_jual
+                            });
+                        }
+                        
+                        // Update tabel
+                        updateProductsTable();
+                        
+                        // Kosongkan input dan fokus kembali
+                        this.value = '';
+                        this.focus();
                     }
-                    
-                    calculateSubtotal();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mengambil data produk');
-            });
-    });
-    
-    // Calculate subtotal when quantity changes
-    document.getElementById('pcs-input').addEventListener('input', calculateSubtotal);
-    
-    function calculateSubtotal() {
-        const harga = parseFloat(document.getElementById('harga-input').value) || 0;
-        const pcs = parseInt(document.getElementById('pcs-input').value) || 1;
-        const subtotal = harga * pcs;
-        
-        document.getElementById('subtotal-input').value = 
-            subtotal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-    }
-    
-    // Add product to table
-    document.getElementById('add-to-table').addEventListener('click', function() {
-        const barcode = document.getElementById('barcode-input').value;
-        const produk = document.getElementById('produk-input').value;
-        const harga = parseFloat(document.getElementById('harga-input').value);
-        const pcs = parseInt(document.getElementById('pcs-input').value);
-        
-        // Validate inputs
-        if (!barcode || !produk || isNaN(harga) || isNaN(pcs) || harga <= 0 || pcs <= 0) {
-            alert('Mohon isi semua data produk dengan benar');
-            return;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mengambil data produk');
+                });
         }
-        
-        // Check if product with same barcode already exists
-        const existingProductIndex = products.findIndex(p => p.barcode === barcode);
-        
-        if (existingProductIndex !== -1) {
-            // If product exists, update its quantity
-            products[existingProductIndex].pcs += pcs;
-            products[existingProductIndex].subtotal = 
-                products[existingProductIndex].harga * products[existingProductIndex].pcs;
-        } else {
-            // Add new product
-            products.push({
-                barcode: barcode,
-                produk: produk,
-                harga: harga,
-                pcs: pcs,
-                subtotal: harga * pcs
-            });
-        }
-        
-        // Update the table
-        updateProductsTable();
-        
-        // Clear the form
-        document.getElementById('barcode-input').value = '';
-        document.getElementById('produk-input').value = '';
-        document.getElementById('harga-input').value = '';
-        document.getElementById('pcs-input').value = '';
-        document.getElementById('subtotal-input').value = '';
-        
-        // Focus on the barcode input
-        document.getElementById('barcode-input').focus();
     });
     
     function updateProductsTable() {
         const tableBody = document.querySelector('#products-table tbody');
         
-        // Clear existing dynamic rows (keep existing rows from backend)
+        // Hapus baris dinamis yang sudah ada
         const dynamicRows = tableBody.querySelectorAll('tr[data-dynamic="true"]');
         dynamicRows.forEach(row => row.remove());
         
-        // Recalculate total
-        let totalAmount = 0;
+        // Hitung ulang subtotal
+        let subtotalAmount = 0;
         
-        // Add new rows for dynamically added products
+        // Tambahkan baris baru untuk produk yang ditambahkan
         products.forEach((product, index) => {
             const row = document.createElement('tr');
             row.setAttribute('data-dynamic', 'true');
             
-            // Calculate row number (include existing rows)
+            // Hitung nomor baris (termasuk baris yang sudah ada)
             const rowNumber = tableBody.querySelectorAll('tr').length + 1;
             
             row.innerHTML = `
@@ -259,24 +176,35 @@
             
             tableBody.appendChild(row);
             
-            // Add to total
-            totalAmount += product.subtotal;
+            // Tambahkan ke subtotal
+            subtotalAmount += product.subtotal;
         });
         
+        // Update subtotal amount
+        const subtotalElement = document.getElementById('subtotal-amount');
+        subtotalElement.textContent = `Rp. ${subtotalAmount.toLocaleString('id-ID')}`;
+        
+        // Hitung total setelah potongan
+        const potonganInput = document.getElementById('potongan-input');
+        const potongan = parseFloat(potonganInput.value) || 0;
+        const totalAmount = subtotalAmount - potongan;
+        
         // Update total amount
-        document.getElementById('total-amount').textContent = 
-            `Rp. ${totalAmount.toLocaleString('id-ID')}`;
+        const totalElement = document.getElementById('total-amount');
+        totalElement.textContent = `Rp. ${totalAmount.toLocaleString('id-ID')}`;
         
-        // Calculate total after discount
-        calculateTotalSetelahPotongan(totalAmount);
+        // Update hidden inputs untuk form submit
+        document.getElementById('subtotal-hidden').value = subtotalAmount;
+        document.getElementById('potongan-hidden').value = potongan;
+        document.getElementById('total-hidden').value = totalAmount;
         
-        // Add hidden inputs for form submission
+        // Tambahkan input tersembunyi untuk submit form
         const submitForm = document.getElementById('submit-form');
         
-        // Remove any existing dynamic hidden inputs
+        // Hapus input dinamis yang sudah ada
         submitForm.querySelectorAll('input[data-dynamic="true"]').forEach(input => input.remove());
         
-        // Add new hidden inputs for each product
+        // Tambahkan input tersembunyi baru untuk setiap produk
         products.forEach((product, index) => {
             const barcodeInput = document.createElement('input');
             barcodeInput.type = 'hidden';
@@ -324,30 +252,12 @@
         updateProductsTable();
     }
 
-    // Fungsi untuk menghitung total setelah potongan
-    function calculateTotalSetelahPotongan(totalAmount) {
-        const potonganInput = document.getElementById('potongan-input');
-        const totalSetelahPotonganElement = document.getElementById('total-setelah-potongan');
-        
-        // Tambahkan event listener untuk input potongan
-        potonganInput.addEventListener('input', updatePotongan);
-        
-        function updatePotongan() {
-            const potongan = parseFloat(potonganInput.value) || 0;
-            const totalSetelahPotongan = Math.max(totalAmount - potongan, 0);
-            
-            totalSetelahPotonganElement.textContent = 
-                `Rp. ${totalSetelahPotongan.toLocaleString('id-ID')}`;
-        }
-        
-        // Perhitungan awal
-        updatePotongan();
-    }
-
-    // Inisialisasi perhitungan potongan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        const initialTotal = 0;
-        calculateTotalSetelahPotongan(initialTotal);
+    // Event listener untuk input potongan
+    document.getElementById('potongan-input').addEventListener('input', function() {
+        updateProductsTable();
     });
+
+    // Panggil updateProductsTable saat halaman dimuat untuk menginisialisasi total
+    updateProductsTable();
 </script>
 @endsection
