@@ -54,7 +54,7 @@ class PenjualanController extends Controller
         return redirect()->route('detail_penjualan.create', ['penjualan_id' => $penjualan->id])
             ->with('success', 'Data penjualan berhasil disimpan! Silakan isi detail penjualan.');
         
-    }
+        }
    
     public function edit($id)
     {
@@ -85,5 +85,11 @@ class PenjualanController extends Controller
         $penjualan->delete();
 
         return redirect()->route('penjualan.index')->with('success', 'Data penjualan berhasil dihapus.');
+    }
+
+    public function nota($id)
+    {
+        $penjualan = Penjualan::with('detailPenjualans')->findOrFail($id);
+        return view('kasir.penjualan.print_nota', compact('penjualan'));
     }
 }

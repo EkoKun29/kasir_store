@@ -82,12 +82,16 @@
                 <input type="hidden" name="subtotal" id="subtotal-hidden">
                 <input type="hidden" name="potongan" id="potongan-hidden">
                 <input type="hidden" name="total" id="total-hidden">
-                <button type="submit" class="btn btn-success mt-3">Simpan & Cetak</button>
+                <form id="submit-form" action="{{ route('detail_penjualan.store') }}" method="POST" target="_blank">
+                    @csrf
+                    <input type="hidden" name="penjualan_id" value="{{ $penjualan->id }}">
+                    <button type="submit" class="btn btn-success mt-3">Simpan & Cetak</button>
+                </form>
             </form>
         </div>
     </div>
     
-    <a href="{{ route('penjualan.index') }}" class="btn btn-secondary mt-3">Selesai</a>
+    {{-- <a href="{{ route('penjualan.index') }}" class="btn btn-secondary mt-3">Selesai</a> --}}
 </div>
 
 <script>
@@ -256,6 +260,12 @@
     document.getElementById('potongan-input').addEventListener('input', function() {
         updateProductsTable();
     });
+
+    document.getElementById('submit-form').addEventListener('submit', function() {
+    setTimeout(() => {
+        window.open(`/penjualan/nota/${penjualanId}`, '_blank');
+    }, 500); // Delay agar data sudah tersimpan
+});
 
     // Panggil updateProductsTable saat halaman dimuat untuk menginisialisasi total
     updateProductsTable();

@@ -49,10 +49,57 @@ class DetailPenjualanController extends Controller
                 'subtotal' => $product['subtotal'],
             ]);
         }
-    
-        return redirect()->route('penjualan.index')
-                         ->with('success', 'Detail penjualan berhasil ditambahkan.');
+        // Ambil data penjualan untuk digunakan pada redirect
+        $penjualan = Penjualan::find($request->penjualan_id);
+         // Validasi jika data penjualan tidak ditemukan
+        if (!$penjualan) {
+            return redirect()->route('penjualan.index')
+                            ->with('error', 'Data penjualan tidak ditemukan.');
+        }
+
+        // Redirect ke halaman cetak nota dengan membawa data
+        return redirect()->route('penjualan.nota', ['id' => $penjualan->id]);
+        // return redirect()->route('penjualan.index')
+        //                  ->with('success', 'Detail penjualan berhasil ditambahkan.');
     }
+
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'penjualan_id' => 'required|integer',
+    //         'products' => 'required|array',
+    //         'products.*.barcode' => 'required|string',
+    //         'products.*.produk' => 'required|string',
+    //         'products.*.harga' => 'required|numeric',
+    //         'products.*.pcs' => 'required|integer',
+    //         'products.*.subtotal' => 'required|numeric',
+    //     ]);
+
+    //     // Proses multiple produk
+    //     foreach ($request->products as $product) {
+    //         DetailPenjualan::create([
+    //             'penjualan_id' => $request->penjualan_id,
+    //             'barcode_id' => $product['barcode'],
+    //             'produk' => $product['produk'],
+    //             'harga' => $product['harga'],
+    //             'pcs' => $product['pcs'],
+    //             'subtotal' => $product['subtotal'],
+    //         ]);
+    //     }
+
+    //     // Ambil data penjualan untuk digunakan pada redirect
+    //     $penjualan = Penjualan::find($request->penjualan_id);
+
+    //     // Validasi jika data penjualan tidak ditemukan
+    //     if (!$penjualan) {
+    //         return redirect()->route('penjualan.index')
+    //                         ->with('error', 'Data penjualan tidak ditemukan.');
+    //     }
+
+    //     // Redirect ke halaman cetak nota dengan membawa data
+    //     return redirect()->route('penjualan.nota', ['id' => $penjualan->id]);
+    // }
+
 
     public function showDetailPenjualan($id) 
     {

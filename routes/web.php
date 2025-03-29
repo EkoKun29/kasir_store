@@ -118,3 +118,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 // // Route::get('/get-barcode-details', [DetailPenjualanController::class, 'getBarcodeDetails'])->name('get.barcode.details');
 Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getDetails']);
 
+//print nota
+Route::get('/penjualan/nota/{id}', [PenjualanController::class, 'nota'])->name('penjualan.nota');
+

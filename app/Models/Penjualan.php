@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\DetailPenjualan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,5 +22,11 @@ class Penjualan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function detailPenjualans()
+    {
+        return $this->hasMany(DetailPenjualan::class, 'penjualan_id', 'id');
+    }
+
 }
 
