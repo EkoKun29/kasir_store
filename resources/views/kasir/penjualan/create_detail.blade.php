@@ -25,7 +25,7 @@
             <h5>Detail Penjualan</h5>
         </div>
         <div class="card-body">
-            <form id="submit-form" action="{{ route('detail_penjualan.store') }}" method="POST" target="_blank">
+            <form id="submit-form" action="{{ route('detail_penjualan.store') }}" method="POST" >
                 @csrf
                 <input type="hidden" name="penjualan_id" value="{{ $penjualan->id }}">
                 

@@ -65,7 +65,7 @@ class DetailPenjualanController extends Controller
                 'produk' => $product['produk'],
                 'harga' => $product['harga'],
                 'pcs' => $product['pcs'],
-                'subtotal' => round($subtotalAkhir, 0), // simpan subtotal setelah dikurangi bagian potongan
+                'subtotal' => round($subtotalAkhir, 0),
             ]);
         }
 
