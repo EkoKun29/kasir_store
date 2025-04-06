@@ -34,28 +34,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $totalSubtotal = 0;
+                    @endphp
                     @forelse($detailPenjualans as $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        {{-- <td>{{ $item->barcode_id}}</td> --}}
-                        <td>{{ $item->barcode->produk }}</td>
-                        <td>Rp. {{ number_format($item->barcode->harga_jual, 0, ',', '.') }}</td>
-                        <td>{{ $item->pcs }}</td>
-                        <td>Rp. {{ number_format($item->subtotal, 0, ',', '.') }}</td>
-                        
-                    </tr>
+                        @php
+                            $subtotal = $item->barcode->harga_jual * $item->pcs;
+                            $totalSubtotal += $subtotal;
+                        @endphp
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->barcode->produk }}</td>
+                            <td>Rp. {{ number_format($item->barcode->harga_jual, 0, ',', '.') }}</td>
+                            <td>{{ $item->pcs }}</td>
+                            <td>Rp. {{ number_format($subtotal, 0, ',', '.') }}</td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Tidak ada data penjualan</td>
-                    </tr>
+                        <tr>
+                            <td colspan="6" class="text-center">Tidak ada data penjualan</td>
+                        </tr>
                     @endforelse
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                        <td><strong>Rp. {{ number_format($totalPenjualan, 0, ',', '.') }}</strong></td>
+                        <td colspan="4" class="text-right"><strong>Potongan:</strong></td>
+                        <td><strong>Rp. {{ number_format($penjualan->potongan ?? 0, 0, ',', '.') }}</strong></td>
                     </tr>
-                </tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right"><strong>Total Bayar:</strong></td>
+                        <td>
+                            <strong>
+                                Rp. {{ number_format($totalSubtotal - ($penjualan->potongan ?? 0), 0, ',', '.') }}
+                            </strong>
+                        </td>
+                    </tr>
+                </tfoot>                
             </table>
         </div>
         <div class="card-footer">

@@ -89,7 +89,8 @@ class PenjualanController extends Controller
 
     public function nota($id)
     {
-        $penjualan = Penjualan::with('detailPenjualans')->findOrFail($id);
+        $penjualan = Penjualan::with('detailPenjualans.barcode')->findOrFail($id);
         return view('kasir.penjualan.print_nota', compact('penjualan'));
     }
+    
 }

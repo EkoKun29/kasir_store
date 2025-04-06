@@ -20,7 +20,7 @@ class DetailPenjualan extends Model
 
     public function barcode()
     {
-        return $this->belongsTo(Barcode::class);
+        return $this->belongsTo(Barcode::class, 'barcode_id');
     }
 
     public function penjualan()

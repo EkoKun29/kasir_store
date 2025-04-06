@@ -35,70 +35,52 @@ class DetailPenjualanController extends Controller
             'products.*.produk' => 'required|string',
             'products.*.harga' => 'required|numeric',
             'products.*.pcs' => 'required|integer',
-            'products.*.subtotal' => 'required|numeric',
+            'potongan' => 'nullable|numeric|min:0'
         ]);
-    
-        // Proses multiple produk
+
+        $potongan = $request->potongan ?? 0;
+        $totalSebelumPotongan = 0;
+
+        // Hitung total sebelum potongan
         foreach ($request->products as $product) {
+            $subtotal = $product['harga'] * $product['pcs'];
+            $totalSebelumPotongan += $subtotal;
+        }
+
+        // Hitung subtotal akhir
+        $subtotalSetelahPotongan = $totalSebelumPotongan - $potongan;
+        if ($subtotalSetelahPotongan < 0) {
+            $subtotalSetelahPotongan = 0;
+        }
+
+        // Simpan detail penjualan
+        foreach ($request->products as $product) {
+            $subtotal = $product['harga'] * $product['pcs'];
+            $subtotalPersentasePotongan = ($subtotal / $totalSebelumPotongan) * $potongan;
+            $subtotalAkhir = $subtotal - $subtotalPersentasePotongan;
+
             DetailPenjualan::create([
                 'penjualan_id' => $request->penjualan_id,
                 'barcode_id' => $product['barcode'],
                 'produk' => $product['produk'],
                 'harga' => $product['harga'],
                 'pcs' => $product['pcs'],
-                'subtotal' => $product['subtotal'],
+                'subtotal' => round($subtotalAkhir, 0), // simpan subtotal setelah dikurangi bagian potongan
             ]);
         }
-        // Ambil data penjualan untuk digunakan pada redirect
+
+        // Simpan potongan ke tabel penjualan
         $penjualan = Penjualan::find($request->penjualan_id);
-         // Validasi jika data penjualan tidak ditemukan
         if (!$penjualan) {
             return redirect()->route('penjualan.index')
                             ->with('error', 'Data penjualan tidak ditemukan.');
         }
 
-        // Redirect ke halaman cetak nota dengan membawa data
-        return redirect()->route('penjualan.nota', ['id' => $penjualan->id]);
-        // return redirect()->route('penjualan.index')
-        //                  ->with('success', 'Detail penjualan berhasil ditambahkan.');
+        $penjualan->potongan = $potongan;
+        $penjualan->save();
+
+        return view('kasir.penjualan.print_nota', compact('penjualan'));
     }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'penjualan_id' => 'required|integer',
-    //         'products' => 'required|array',
-    //         'products.*.barcode' => 'required|string',
-    //         'products.*.produk' => 'required|string',
-    //         'products.*.harga' => 'required|numeric',
-    //         'products.*.pcs' => 'required|integer',
-    //         'products.*.subtotal' => 'required|numeric',
-    //     ]);
-
-    //     // Proses multiple produk
-    //     foreach ($request->products as $product) {
-    //         DetailPenjualan::create([
-    //             'penjualan_id' => $request->penjualan_id,
-    //             'barcode_id' => $product['barcode'],
-    //             'produk' => $product['produk'],
-    //             'harga' => $product['harga'],
-    //             'pcs' => $product['pcs'],
-    //             'subtotal' => $product['subtotal'],
-    //         ]);
-    //     }
-
-    //     // Ambil data penjualan untuk digunakan pada redirect
-    //     $penjualan = Penjualan::find($request->penjualan_id);
-
-    //     // Validasi jika data penjualan tidak ditemukan
-    //     if (!$penjualan) {
-    //         return redirect()->route('penjualan.index')
-    //                         ->with('error', 'Data penjualan tidak ditemukan.');
-    //     }
-
-    //     // Redirect ke halaman cetak nota dengan membawa data
-    //     return redirect()->route('penjualan.nota', ['id' => $penjualan->id]);
-    // }
 
 
     public function showDetailPenjualan($id) 
