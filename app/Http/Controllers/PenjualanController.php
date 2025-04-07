@@ -31,7 +31,7 @@ class PenjualanController extends Controller
             'status_penjualan' => 'nullable|string|max:125',
         ]);
 
-        // Buat nomor_surat secara otomatis
+        // Buat nomor_surat otomatis
         $latestPenjualan = Penjualan::orderby('id', 'DESC')->first();
         if(!$latestPenjualan){
             $nomorSurat="NPJ-" . 1;

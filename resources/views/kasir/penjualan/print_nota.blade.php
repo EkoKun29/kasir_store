@@ -45,7 +45,7 @@
     <div class="content">
         <table>
             <tr><td><strong>Nomor Nota:</strong></td><td>{{ $penjualan->nomor_surat ?? '-' }}</td></tr>
-            <tr><td><strong>ID Kios:</strong></td><td>{{ $penjualan->id_kios ?? '-' }}</td></tr>
+            <tr><td><strong>Kios:</strong></td><td>{{ $penjualan->id_kios ?? '-' }}</td></tr>
             <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $penjualan->status_penjualan ?? '-' }}</td></tr>
         </table>
 

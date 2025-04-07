@@ -14,7 +14,6 @@
                 height: 40mm;
                 margin: 0;
                 padding: 0;
-                overflow: hidden;
                 background: white;
                 font-family: Arial, sans-serif;
             }
@@ -27,10 +26,11 @@
                 width: 100%;
                 height: 100%;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
-                justify-content: center;
-                text-align: center;
+                justify-content: flex-start; 
+                padding: 5mm;
+                gap: 10px;
             }
 
             #qrcode canvas {
@@ -40,8 +40,8 @@
 
             .barcode-text {
                 font-size: 16px;
-                margin-top: 4px;
                 font-weight: bold;
+                text-align: left;
             }
         }
 
@@ -52,19 +52,18 @@
         }
 
         .container {
-            width: 100%;
-            height: 100%;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            justify-content: flex-start;
+            padding: 5mm;
+            gap: 10px;
         }
 
         .barcode-text {
             font-size: 16px;
-            margin-top: 4px;
             font-weight: bold;
+            text-align: left;
         }
     </style>
 </head>
