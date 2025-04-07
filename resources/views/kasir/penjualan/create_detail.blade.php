@@ -114,7 +114,7 @@
     document.getElementById('barcode-input').addEventListener('keypress', function(event) {
         // Hanya jalankan jika tombol Enter ditekan
         if (event.key === 'Enter') {
-            event.preventDefault(); // Mencegah form submit
+            event.preventDefault();
             const barcodeId = this.value;
             
             if (!barcodeId.trim()) {

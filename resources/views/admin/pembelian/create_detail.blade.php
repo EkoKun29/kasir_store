@@ -62,47 +62,33 @@
                 </thead>
                 <tbody>
                     @foreach ($detailPembelians as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    {{ $item->produk }}
-                                </td>
-                                <td>
-                                   Rp. {{ number_format($item->harga, 0, ',', '.') }}
-                                </td>
-                                <td>
-                                    {{ $item->qty }}
-                                </td>
-                                <td>
-                                    <td>Rp. {{ number_format($item->subtotal, 0, ',', '.') }}</td>
-                                </td>
-                                <td>
-                                    <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-sm">
-                                        Hapus
-                                    </button>         
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->produk }}</td>
+                            <td>Rp. {{ number_format($item->harga, 0, ',', '.') }}</td>
+                            <td>{{ $item->qty }}</td>
+                            <td>Rp. {{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm">
+                                    Hapus
+                                </button>         
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
-                <tfoot>
-                </tfoot>
             </table>
         </div>
-    </div>
-    
+    </div>    
     <a href="{{ route('pembelian.index') }}" class="btn btn-secondary mt-3">Selesai</a>
 </div>
 
 
 
 <script>
-    // Array to store all products
     let products = [];
     
-    // Calculate subtotal when inputs change
+    // Hitung sub total
     document.getElementById('harga-input').addEventListener('input', calculateSubtotal);
     document.getElementById('qty-input').addEventListener('input', calculateSubtotal);
     
@@ -115,13 +101,13 @@
             subtotal.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
     }
     
-    // Add product to table
+    // tambah produk di tabel
     document.getElementById('add-to-table').addEventListener('click', function() {
         const produk = document.getElementById('produk-input').value;
         const harga = parseFloat(document.getElementById('harga-input').value);
         const qty = parseInt(document.getElementById('qty-input').value);
         
-        // Validate inputs
+        
         if (!produk || isNaN(harga) || isNaN(qty) || harga <= 0 || qty <= 0) {
             alert('Mohon isi semua data produk dengan benar');
             return;
@@ -129,7 +115,7 @@
         
         const subtotal = harga * qty;
         
-        // Add to products array
+
         products.push({
             produk: produk,
             harga: harga,
@@ -137,20 +123,19 @@
             subtotal: subtotal
         });
         
-        // Update the table
+        // Update table
         updateProductsTable();
         
-        // Clear the form
+        // Clear form
         document.getElementById('produk-input').value = '';
         document.getElementById('harga-input').value = '';
         document.getElementById('qty-input').value = '';
         document.getElementById('subtotal-input').value = '';
         
-        // Focus on the product input
         document.getElementById('produk-input').focus();
     });
     
-    // Update the products table
+    // Update produk table
     function updateProductsTable() {
         const tbody = document.querySelector('#products-table tbody');
         tbody.innerHTML = '';
@@ -182,7 +167,7 @@
             totalAmount.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
     }
     
-    // Delete product from table
+    // Hapus produk di tabel
     document.querySelector('#products-table tbody').addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-product')) {
             const index = parseInt(event.target.getAttribute('data-index'));
@@ -194,7 +179,7 @@
         }
     });
     
-    // Submit all products
+    // Submit semua products
     document.getElementById('submit-form').addEventListener('submit', function(event) {
         if (products.length === 0) {
             event.preventDefault();
