@@ -4,7 +4,9 @@
 <div class="container"> 
     <div class="card mb-4">
         <div class="card-header">
-            <h5>Form Input Penjualan | {{ $penjualan->nomor_surat ?? '-' }} | {{ $penjualan->id_kios ?? '-' }} | {{ $penjualan->status_penjualan ?? '-' }} </h5>
+            <h5 style="color: black;">
+                Form Input Penjualan | {{ $penjualan->nomor_surat ?? '-' }} | {{ $penjualan->id_kios ?? '-' }} | {{ $penjualan->status_penjualan ?? '-' }}
+            </h5>            
         </div>
         <div class="card-body">
             <div id="product-form">
