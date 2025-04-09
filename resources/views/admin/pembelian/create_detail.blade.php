@@ -72,7 +72,12 @@
                             <td>
                                 <button type="button" class="btn btn-danger btn-sm">
                                     Hapus
-                                </button>         
+                                </button>  
+                                <a href="{{ route('barcode.show', $item->barcode_id) }}" 
+                                    class="btn btn-success btn-sm" 
+                                    style="margin-top: 5px">
+                                    Cetak Barcode
+                                </a>       
                             </td>
                         </tr>
                     @endforeach
@@ -80,7 +85,11 @@
             </table>
         </div>
     </div>    
-    <a href="{{ route('pembelian.index') }}" class="btn btn-secondary mt-3">Selesai</a>
+    <a href="{{ route('pembelian.nota', $pembelian->id) }}" 
+        class="btn btn-secondary mt-3"
+        onclick="setTimeout(() => window.location.href='{{ route('pembelian.index') }}', 1000)">
+         Selesai & Cetak Nota
+     </a>     
 </div>
 
 

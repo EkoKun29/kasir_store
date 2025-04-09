@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Nota Penjualan</title>
+    <title>Nota Pembelian</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,6 +20,7 @@
         }
         .content table {
             width: 100%;
+            border-collapse: collapse;
         }
         .content th, .content td {
             text-align: left;
@@ -35,7 +36,13 @@
             display: none;
         }
 
+        /* Tambahan khusus untuk cetak */
         @media print {
+            body {
+                width: 80mm;
+                margin: 0 auto;
+            }
+
             .print-btn {
                 display: none !important;
             }
@@ -48,14 +55,15 @@
         <h3>Navisya Store</h3>
         <p>Jl. KESATRIA</p>
         <p>Telp: (021) 123-4567</p>
-        <p><strong>Nota Penjualan</strong></p>
+        <p><strong>Nota Pembelian</strong></p>
     </div>
 
     <div class="content">
         <table>
-            <tr><td><strong>Nomor Nota:</strong></td><td>{{ $penjualan->nomor_surat ?? '-' }}</td></tr>
-            <tr><td><strong>Kios:</strong></td><td>{{ $penjualan->id_kios ?? '-' }}</td></tr>
-            <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $penjualan->status_penjualan ?? '-' }}</td></tr>
+            <tr><td><strong>Nomor Surat:</strong></td><td>{{ $pembelian->nomor_surat ?? '-' }}</td></tr>
+            <tr><td><strong>Supplier:</strong></td><td>{{ $pembelian->supplier ?? '-' }}</td></tr>
+            <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $pembelian->status_pembelian ?? '-' }}</td></tr>
+            <tr><td><strong>Tanggal:</strong></td><td>{{ \Carbon\Carbon::parse($pembelian->tanggal_beli)->format('d-m-Y') }}</td></tr>
         </table>
 
         <hr>
@@ -65,40 +73,36 @@
                 <tr>
                     <th>Produk</th>
                     <th>Harga</th>
-                    <th>Pcs</th>
+                    <th>Qty</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $subtotal = 0;
-                @endphp
-                @foreach($penjualan->detailPenjualans as $item)
-                @php
-                    $harga = $item->barcode->harga_jual ?? 0;
-                    $pcs = $item->pcs;
-                    $sub = $harga * $pcs;
-                    $subtotal += $sub;
-                @endphp
-                <tr>
-                    <td>{{ $item->barcode->produk ?? '-' }}</td>
-                    <td>{{ number_format($harga, 0, ',', '.') }}</td>
-                    <td>{{ $pcs }}</td>
-                    <td>{{ number_format($sub, 0, ',', '.') }}</td>
-                </tr>
+                @php $total = 0; @endphp
+                @foreach($pembelian->detailPembelian as $item)
+                    @php
+                        $harga = $item->harga ?? 0;
+                        $jumlah = $item->qty ?? 0;
+                        $sub = $harga * $jumlah;
+                        $total += $sub;
+                    @endphp
+                    <tr>
+                        <td>{{ $item->barcode->produk ?? '-' }}</td>
+                        <td>{{ number_format($harga, 0, ',', '.') }}</td>
+                        <td>{{ $jumlah }}</td>
+                        <td>{{ number_format($sub, 0, ',', '.') }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
 
         <div class="total">
-            <p>Subtotal: Rp. {{ number_format($subtotal, 0, ',', '.') }}</p>
-            <p>Potongan: Rp. {{ number_format($penjualan->potongan ?? 0, 0, ',', '.') }}</p>
-            <p><strong>Total Bayar: Rp. {{ number_format($subtotal - ($penjualan->potongan ?? 0), 0, ',', '.') }}</strong></p>
+            <p>Total Bayar: Rp. {{ number_format($total, 0, ',', '.') }}</p>
         </div>
     </div>
 
     <div class="footer">
-        <p>Terima Kasih Telah Berbelanja!</p>
+        <p>Terima Kasih!</p>
     </div>
 
     <button class="print-btn" onclick="window.print()">Cetak Ulang</button>
@@ -106,10 +110,12 @@
     <script>
         window.onload = function () {
             window.print();
+
             window.onafterprint = function () {
+                
                 setTimeout(function () {
-                    window.location.href = "{{ route('penjualan.index') }}";
-                }, 20000); 
+                    window.location.href = "{{ route('pembelian.index') }}";
+                }, 20000);
             };
         };
     </script>

@@ -60,4 +60,6 @@ class DetailPembelianController extends Controller
                         ->with('success', 'Produk dan data barcode berhasil dihapus.');
     }
 
+
+
 }

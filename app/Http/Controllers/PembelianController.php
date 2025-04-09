@@ -31,19 +31,25 @@ class PembelianController extends Controller
             'status_pembelian' => 'required|string'
         ]);
 
-        // Simpan data pembelian terlebih dahulu
+        // Generate nomor_surat otomatis
+        $lastPembelian = Pembelian::orderBy('id', 'desc')->first();
+        $lastNumber = $lastPembelian ? intval(substr($lastPembelian->nomor_surat, 4)) : 0;
+        $newNumber = $lastNumber + 1;
+        $nomorSurat = 'NPB-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+        // Simpan data pembelian
         $pembelian = Pembelian::create([
             'tanggal_beli' => $request->tanggal_beli,
             'supplier' => $request->supplier,
             'total_harga' => 0,
+            'nomor_surat' => $nomorSurat,
             'id_user' => auth()->id(),
             'status_pembelian' => $request->status_pembelian
         ]);
 
-        // Hitung total harga baru
+        // Hitung total harga jika ada detail pembelian (jika pakai AJAX atau tambah setelah ini)
         $totalHarga = DetailPembelian::where('pembelian_id', $pembelian->id)->sum('subtotal');
 
-        // Update total harga pada tabel pembelian
         $pembelian->update([
             'total_harga' => $totalHarga
         ]);
@@ -190,5 +196,11 @@ class PembelianController extends Controller
 
         return redirect()->back()->with('success', 'Data pembelian berhasil dihapus.');
     }
+
+    public function nota($id)
+    {
+        $pembelian = Pembelian::with('detailPembelian.barcode')->findOrFail($id);
+        return view('admin.pembelian.nota_pembelian', compact('pembelian'));        
+    }    
 
 }

@@ -12,7 +12,7 @@
                     <th>Harga Beli</th>
                     <th>Qty</th>
                     <th>Subtotal</th>
-                    <th>Harga Jual</th>
+                    {{-- <th>Harga Jual</th> --}}
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -25,7 +25,7 @@
                         <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
                         <td>{{ $detail->qty }}</td>
                         <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
-                        <td>Rp {{ number_format($detail->harga_jual, 0, ',', '.') }}</td>
+                        {{-- <td>Rp {{ number_format($detail->harga_jual, 0, ',', '.') }}</td> --}}
                         <td>
                             <a href="{{ route('pembelian.edit-detail', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             {{-- <form action="{{ route('pembelian.destroy-detail', $detail->id) }}" method="POST" style="display:inline;">

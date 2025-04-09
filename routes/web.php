@@ -122,3 +122,6 @@ Route::get('/get-barcode-details/{barcode_id}', [BarcodeController::class, 'getD
 Route::get('/penjualan/nota/{id}', [PenjualanController::class, 'nota'])->name('penjualan.nota');
 Route::post('/penjualan/{id}/update-potongan', [PenjualanController::class, 'updatePotongan'])->name('penjualan.update-potongan');
 Route::post('/penjualan/{id}/update-totals', [PenjualanController::class, 'updateTotals'])->name('penjualan.update-totals');
+
+//nota pembelian
+Route::get('/pembelian/{id}/nota', [PembelianController::class, 'nota'])->name('pembelian.nota');
