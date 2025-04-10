@@ -92,5 +92,17 @@ class PenjualanController extends Controller
         $penjualan = Penjualan::with('detailPenjualans.barcode')->findOrFail($id);
         return view('kasir.penjualan.print_nota', compact('penjualan'));
     }
+
+    //API
+    public function apiIndex()
+    {
+        $penjualans = Penjualan::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Penjualan',
+            'data' => $penjualans
+        ]);
+    }
     
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KiosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
@@ -95,6 +96,14 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    //kios
+    Route::get('/kios', [KiosController::class, 'index'])->name('kios.index');
+    Route::get('/kios/create', [KiosController::class, 'create'])->name('kios.create');
+    Route::post('/kios', [KiosController::class, 'store'])->name('kios.store');
+    Route::get('/kios/{id}/edit', [KiosController::class, 'edit'])->name('kios.edit');
+    Route::put('/kios/{id}', [KiosController::class, 'update'])->name('kios.update');
+    Route::delete('/kios/{id}', [KiosController::class, 'destroy'])->name('kios.destroy');
 });
 
 

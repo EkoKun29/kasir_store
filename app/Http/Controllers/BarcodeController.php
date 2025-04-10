@@ -133,4 +133,17 @@ class BarcodeController extends Controller
         'harga_jual' => $barcode->harga_jual
     ]);
 }
+
+    //API
+    public function apiIndex()
+    {
+        $barcodes = Barcode::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Barcode',
+            'data' => $barcodes
+        ]);
+    }
+
 }

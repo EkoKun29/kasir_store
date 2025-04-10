@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Daftar Harga Jual</h5>
-        <a href="{{ route('hargajual.create') }}" class="btn btn-primary mb-3">Input Harga Jual</a>
+        {{-- <a href="{{ route('hargajual.create') }}" class="btn btn-primary mb-3">Input Harga Jual</a> --}}
 
         <table class="table datatable">
             <thead>

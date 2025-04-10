@@ -60,6 +60,16 @@ class DetailPembelianController extends Controller
                         ->with('success', 'Produk dan data barcode berhasil dihapus.');
     }
 
-
+      //API
+      public function apiIndex()
+      {
+          $pembelian = DetailPembelian::all();
+  
+          return response()->json([
+              'success' => true,
+              'message' => 'Data Detail Pembelian',
+              'data' => $pembelian
+          ]);
+      }
 
 }

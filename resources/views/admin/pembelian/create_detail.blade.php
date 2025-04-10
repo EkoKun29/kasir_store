@@ -86,7 +86,7 @@
         </div>
     </div>    
     <a href="{{ route('pembelian.nota', $pembelian->id) }}" 
-        class="btn btn-secondary mt-3"
+        class="btn btn-primary mt-3"
         onclick="setTimeout(() => window.location.href='{{ route('pembelian.index') }}', 1000)">
          Selesai & Cetak Nota
      </a>     

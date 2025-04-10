@@ -103,4 +103,16 @@ class DetailPenjualanController extends Controller
 
         return view('kasir.penjualan.detail_index', compact('penjualan', 'detailPenjualans', 'totalPenjualan'));
     }
+
+    //API
+    public function apiIndex()
+    {
+        $penjualan = DetailPenjualan::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Detail Penjualan',
+            'data' => $penjualan
+        ]);
+    }
 }

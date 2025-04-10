@@ -11,6 +11,13 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
+          <a class="nav-link collapsed" href="{{ route('kios.index') }}">
+              <i class="bi bi-square-half"></i>
+              <span>Kios</span>
+          </a>
+      </li><!-- End Kios Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Barcode</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>

@@ -201,6 +201,19 @@ class PembelianController extends Controller
     {
         $pembelian = Pembelian::with('detailPembelian.barcode')->findOrFail($id);
         return view('admin.pembelian.nota_pembelian', compact('pembelian'));        
-    }    
+    }   
+    
+    //API
+    public function apiIndex()
+    {
+        $pembelian = Pembelian::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Pembelian',
+            'data' => $pembelian
+        ]);
+    }
+    
 
 }

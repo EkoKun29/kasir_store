@@ -35,6 +35,11 @@
             display: none;
         }
 
+        thead th {
+            border-bottom: 1px solid #000;
+            padding-bottom: 4px;
+        }
+
         @media print {
             .print-btn {
                 display: none !important;
@@ -61,7 +66,7 @@
         <hr>
 
         <table>
-            <thead>
+            <thead style="border-bottom: 1px solid #000;">
                 <tr>
                     <th>Produk</th>
                     <th>Harga</th>
