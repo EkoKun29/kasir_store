@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Data Kios</h5>
-        <a href="{{ route('kios.create') }}">
+        <a href="#">
             <button class="btn btn-primary" style="margin-top: 10px">Input Kios</button>
         </a>
         <table class="table datatable">
