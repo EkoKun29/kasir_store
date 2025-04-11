@@ -31,7 +31,7 @@
                 <td>{{ \Carbon\Carbon::parse($detail->tanggal_beli)->translatedFormat('d-m-Y') }}</td>
                 <td>Rp {{ number_format($detail->total_harga, 0, ',', '.') }}</td>
                 <td>
-                    <a href="{{ route('pembelian.detail', $detail->id) }}" class="btn btn-success btn-sm">Detail </a>
+                    <a href="{{ route('pembelian.detail', $detail->id) }}" class="btn btn-primary btn-sm">Detail </a>
                     <a href="{{ route('pembelian.edit', $detail->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $detail->id }})">
                         Hapus
@@ -41,6 +41,7 @@
                         @csrf
                         @method('DELETE')
                     </form>
+                    <a href="{{ route('pembelian.nota', $detail->id) }}" class="btn btn-success btn-sm">Cetak Ulang Nota</a>
                      
                     
                       

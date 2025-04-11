@@ -12,7 +12,8 @@
                     <th>No</th>
                     <th>Produk</th>
                     <th>Tanggal Beli</th>
-                    <th>Harga Jual</th>
+                    <th>Harga Beli</th>
+                    <th>Harga Jual (Satuan)</th>
                     <th>Stok</th>
                     <th>Aksi</th>
                 </tr>
@@ -23,7 +24,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $barcode->produk }}</td>
                     <td>{{ $barcode->tanggal_beli ? \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d-m-Y') : 'Null' }}</td>
-                    <td>Rp. {{ number_format($barcode->harga_jual, 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($barcode->harga_beli, 0, ',', '.') }}</td>
+                    <td> {{ $barcode->harga_jual ? 'Rp. ' . number_format($barcode->harga_jual, 0, ',', '.') : '' }}</td>
                     <td>Stok</td>
                     <td>
                         <a href="{{ route('hargajual.edit', $barcode->id) }}" class="btn btn-warning btn-sm">Revisi Harga Jual</a>

@@ -24,7 +24,7 @@
                     <td>{{ $penjualan->id_kios }}</td>
                     <td>{{ $penjualan->status_penjualan }}</td>
                     <td>
-                        <a href="{{ route('detail_penjualan.show', $penjualan->id) }}" class="btn btn-success btn-sm">Detail</a>
+                        <a href="{{ route('detail_penjualan.show', $penjualan->id) }}" class="btn btn-primary btn-sm">Detail</a>
                         <a href="{{ route('penjualan.edit', $penjualan->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $penjualan->id }})">
                             Hapus
@@ -34,6 +34,7 @@
                             @csrf
                             @method('DELETE')
                         </form>
+                        <a href="{{ route('penjualan.nota', $penjualan->id) }}" class="btn btn-success btn-sm">Cetak Ulang Nota</a>
                     </td>
                 </tr>
             @endforeach

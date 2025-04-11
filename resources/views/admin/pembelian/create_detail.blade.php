@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="harga_jual">Harga Jual</label>
+                            <label for="harga_jual">Harga Jual (Satuan)</label>
                             <input type="number" class="form-control" name="harga_jual" min="1">
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <th>Harga</th>
                         <th>Qty</th>
                         <th>Subtotal</th>
-                        <th>Harga Jual</th>
+                        <th>Harga Jual (Satuan)</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>

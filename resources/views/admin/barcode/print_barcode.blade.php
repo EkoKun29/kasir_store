@@ -38,10 +38,17 @@
                 height: 80px !important;
             }
 
+            .barcode-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
             .barcode-text {
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: bold;
                 text-align: left;
+                margin-bottom: 2px;
             }
         }
 
@@ -60,17 +67,30 @@
             gap: 10px;
         }
 
+        .barcode-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .barcode-text {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             text-align: left;
+            margin-bottom: 2px;
         }
     </style>
 </head>
 <body onload="window.print();">
     <div class="container">
         <div id="qrcode"></div>
-        <div class="barcode-text">{{ $barcode->produk }}</div>
+        <div class="barcode-info">
+            <div class="barcode-text">{{ $barcode->id }}</div>
+            <div class="barcode-text">{{ $barcode->produk }}</div>
+            <div class="barcode-text">
+                {{ $barcode->harga_jual ? 'Rp. ' . number_format($barcode->harga_jual, 0, ',', '.') : '' }}
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.js"
