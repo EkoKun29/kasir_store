@@ -36,7 +36,7 @@ class BarcodeController extends Controller
         $hpp = $request->harga_beli / $request->qty;
 
         Barcode::create([
-            'produk' => $request->produk,
+            'produk' => strtoupper($request->produk),
             'tanggal_beli' => $request->tanggal_beli,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
@@ -68,7 +68,7 @@ class BarcodeController extends Controller
 
         $barcode = Barcode::findOrFail($id);
         $barcode->update([
-            'produk' => $request->produk,
+            'produk' => strtoupper($request->produk),
             'tanggal_beli' => $request->tanggal_beli,
             'harga_beli' => $request->harga_beli,
             'harga_jual' => $request->harga_jual,
@@ -111,7 +111,7 @@ class BarcodeController extends Controller
         $barcode = Barcode::where('id', )->first();
         $jual = New Pembelian;
         $jual->id_barcode = $barcode->id;
-        $jual->produk = $barcode->produk;
+        $jual->produk = strtoupper($barcode->produk);
         $jual->harga_beli = $barcode->harga_beli;
         $jual->hpp = $barcode->hpp;
         $jual->harga_jual = $barcode->harga_jual;
@@ -129,7 +129,7 @@ class BarcodeController extends Controller
     }
     
     return response()->json([
-        'produk' => $barcode->produk,
+        'produk' => strtoupper($barcode->produk),
         'harga_jual' => $barcode->harga_jual
     ]);
 }
