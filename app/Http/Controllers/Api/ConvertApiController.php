@@ -33,6 +33,8 @@ class ConvertApiController extends Controller
                         return [
                             'id' => $detail->id,
                             'barcode_id' => $detail->barcode_id,
+                            'nama_produk' => $detail->barcode ? $detail->barcode->produk : 'Produk tidak ditemukan',
+                            'harga_jual' => $detail->barcode ? $detail->barcode->harga_jual : 'Tidak ada harga jual',
                             'pcs' => $detail->pcs,
                             'subtotal' => $detail->subtotal,
                             'diskon' => $detail->diskon,
