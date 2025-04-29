@@ -8,6 +8,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\Api\ConvertApiController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
+use App\Http\Controllers\Api\PembelianGabunganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,5 @@ Route::get('/detailpenjualans', [DetailPenjualanController::class, 'apiIndex']);
 // Route untuk API penjualan gabungan
 Route::get('/combined-penjualan', [ConvertApiController::class, 'combinedPenjualan']);
 
-// Route alternatif (jika diperlukan)
-Route::get('/combined-penjualan-alt', [ConvertApiController::class, 'combinedPenjualanAlt']);
+//gabungan pembelian APi
+Route::get('/combined-pembelian', [PembelianGabunganController::class, 'combinedPembelian']);
