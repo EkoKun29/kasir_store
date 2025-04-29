@@ -16,27 +16,29 @@ class ConvertApiController extends Controller
     {
         try {
             // Ambil semua data penjualan dengan relasi detail penjualan
-            $penjualans = Penjualan::with('detailPenjualan')->get();
+            $penjualans = Penjualan::with('detailPenjualans')->get();
             
-            // Format data sesuai kebutuhan
+            // Format data sesuai kebutuhan dan model yang tersedia
             $formattedData = $penjualans->map(function ($penjualan) {
                 return [
                     'id' => $penjualan->id,
-                    'tanggal_jual' => $penjualan->tanggal_jual,
-                    'pelanggan' => $penjualan->pelanggan,
-                    'total_harga' => $penjualan->total_harga,
-                    'nomor_faktur' => $penjualan->nomor_faktur,
+                    'nomor_surat' => $penjualan->nomor_surat,
                     'id_user' => $penjualan->id_user,
+                    'id_kios' => $penjualan->id_kios,
+                    'potongan' => $penjualan->potongan,
                     'status_penjualan' => $penjualan->status_penjualan,
-                    'detail_penjualan' => $penjualan->detailPenjualan->map(function ($detail) {
+                    'created_at' => $penjualan->created_at,
+                    'updated_at' => $penjualan->updated_at,
+                    'detail_penjualan' => $penjualan->detailPenjualans->map(function ($detail) {
                         return [
                             'id' => $detail->id,
-                            'penjualan_id' => $detail->penjualan_id,
-                            'produk' => $detail->produk,
-                            'harga' => $detail->harga,
-                            'qty' => $detail->qty,
-                            'subtotal' => $detail->subtotal,
                             'barcode_id' => $detail->barcode_id,
+                            'pcs' => $detail->pcs,
+                            'subtotal' => $detail->subtotal,
+                            'diskon' => $detail->diskon,
+                            'penjualan_id' => $detail->penjualan_id,
+                            'created_at' => $detail->created_at,
+                            'updated_at' => $detail->updated_at
                         ];
                     }),
                 ];
@@ -74,25 +76,27 @@ class ConvertApiController extends Controller
                 }
                 $detailsByPenjualanId[$detail->penjualan_id][] = [
                     'id' => $detail->id,
-                    'penjualan_id' => $detail->penjualan_id,
-                    'produk' => $detail->produk,
-                    'harga' => $detail->harga,
-                    'qty' => $detail->qty,
-                    'subtotal' => $detail->subtotal,
                     'barcode_id' => $detail->barcode_id,
+                    'pcs' => $detail->pcs,
+                    'subtotal' => $detail->subtotal,
+                    'diskon' => $detail->diskon,
+                    'penjualan_id' => $detail->penjualan_id,
+                    'created_at' => $detail->created_at,
+                    'updated_at' => $detail->updated_at
                 ];
             }
             
-            // Format data sesuai kebutuhan
+            // Format data sesuai kebutuhan dan model yang tersedia
             $formattedData = $penjualans->map(function ($penjualan) use ($detailsByPenjualanId) {
                 return [
                     'id' => $penjualan->id,
-                    'tanggal_jual' => $penjualan->tanggal_jual,
-                    'pelanggan' => $penjualan->pelanggan,
-                    'total_harga' => $penjualan->total_harga,
-                    'nomor_faktur' => $penjualan->nomor_faktur,
+                    'nomor_surat' => $penjualan->nomor_surat,
                     'id_user' => $penjualan->id_user,
+                    'id_kios' => $penjualan->id_kios,
+                    'potongan' => $penjualan->potongan,
                     'status_penjualan' => $penjualan->status_penjualan,
+                    'created_at' => $penjualan->created_at,
+                    'updated_at' => $penjualan->updated_at,
                     'detail_penjualan' => $detailsByPenjualanId[$penjualan->id] ?? [],
                 ];
             });
