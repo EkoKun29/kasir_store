@@ -114,7 +114,7 @@
             window.onafterprint = function () {
                 setTimeout(function () {
                     window.location.href = "{{ route('penjualan.index') }}";
-                }, 20000); 
+                }, 10000); 
             };
         };
     </script>

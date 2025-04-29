@@ -118,7 +118,7 @@
                 
                 setTimeout(function () {
                     window.location.href = "{{ route('pembelian.index') }}";
-                }, 20000);
+                }, 10000);
             };
         };
     </script>
