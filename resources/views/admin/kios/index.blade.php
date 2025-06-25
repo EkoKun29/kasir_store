@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title">Data Kios</h5>
         <a href="#">
-            <button class="btn btn-primary" style="margin-top: 10px">Input Kios</button>
+            <button class="btn btn-primary" style="margin-top: 10px">Tambah Kios</button>
         </a>
         <table class="table datatable">
             <thead>
