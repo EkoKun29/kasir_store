@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pembelians', function (Blueprint $table) {
-            $table->renameColumn('status_penjualan', 'status_pembelian');
+            $table->string('status')->after('id_user')->nullable();
+            
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pembelians', function (Blueprint $table) {
-            $table->renameColumn('status_penjualan', 'status_pembelian');
+            $table->dropColumn('status');
+            
         });
     }
 };

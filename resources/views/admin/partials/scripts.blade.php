@@ -41,4 +41,5 @@
         });
     }
 </script>
+@stack('js')
 

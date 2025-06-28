@@ -17,7 +17,8 @@ class Pembelian extends Model
         'total_harga',
         'nomor_surat',
         'id_user',
-        'status_pembelian'
+        'status_pembelian',
+        'status'
     ];
     public function detailPembelian()
     {

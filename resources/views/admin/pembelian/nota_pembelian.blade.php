@@ -65,7 +65,7 @@
         <table>
             <tr><td><strong>Nomor Surat:</strong></td><td>{{ $pembelian->nomor_surat ?? '-' }}</td></tr>
             <tr><td><strong>Supplier:</strong></td><td>{{ $pembelian->supplier ?? '-' }}</td></tr>
-            <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $pembelian->status_pembelian ?? '-' }}</td></tr>
+            <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $pembelian->status ?? '-' }}</td></tr>
             <tr><td><strong>Tanggal:</strong></td><td>{{ \Carbon\Carbon::parse($pembelian->tanggal_beli)->format('d-m-Y') }}</td></tr>
         </table>
 
@@ -100,7 +100,7 @@
         </table>
 
         <div class="total">
-            <p>Total Bayar: Rp. {{ number_format($total, 0, ',', '.') }}</p>
+            <p>Total Beli: Rp. {{ number_format($total, 0, ',', '.') }}</p>
         </div>
     </div>
 
