@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pembelian;
 use App\Models\DetailPembelian;
 use App\Models\Barcode;
+use App\Models\Kios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
@@ -21,7 +22,8 @@ class PembelianController extends Controller
     // Menampilkan form pembelian
     public function create()
     {
-        return view('admin.pembelian.create');
+        $kios = Kios::All();
+        return view('admin.pembelian.create', compact('kios'));
     }
 
 
@@ -134,20 +136,19 @@ class PembelianController extends Controller
      public function edit($id)
      {
          $pembelian = Pembelian::findOrFail($id);
-         return view('admin.pembelian.edit', compact('pembelian'));
+            $kios = Kios::All();
+
+         return view('admin.pembelian.edit', compact('pembelian', 'kios'));
      }
  
      public function update(Request $request, $id)
      {
-         $request->validate([
-             'supplier' => 'required|string|max:255',
-             'tanggal_beli' => 'required|date',
-             'status_pembelian' => 'required|string'
-            // 'total_harga' => 'required|numeric',
-         ]);
+
  
          $pembelian = Pembelian::findOrFail($id);
-         $pembelian->update($request->all());
+        $pembelian->supplier = $request->supplier;
+        $pembelian->tanggal_beli = $request->tanggal_beli;
+         $pembelian->save();
 
          return redirect()->route('pembelian.index')
                           ->with('success', 'Data pembelian berhasil diperbarui.');
@@ -225,6 +226,12 @@ class PembelianController extends Controller
             'message' => 'Data Pembelian',
             'data' => $pembelian
         ]);
+    }
+
+    public function hapus_detail($id){
+        $hapus = DetailPembelian::find($id);
+        $hapus->delete();
+        return redirect()->back()->with('success', 'Data pembelian berhasil dihapus.');
     }
     
 

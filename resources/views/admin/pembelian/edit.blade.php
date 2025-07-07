@@ -10,7 +10,14 @@
 
         <div class="mb-3">
             <label for="supplier" class="form-label">Supplier</label>
-            <input type="text" id="supplier" name="supplier" value="{{ old('supplier', $pembelian->supplier) }}" class="form-control" required>
+            <select class="form-control js-example-basic-single" name="supplier"
+                                autocomplete="off" required>
+                                <option value="{{ old('supplier', $pembelian->supplier) }}" selected>{{ old('supplier', $pembelian->supplier) }}</option>
+                                @foreach($kios as $pk)
+                                    <option value="{{$pk->toko}}">{{$pk->toko}}</option>
+                                @endforeach
+                                
+                            </select>
         </div>
 
         <div class="mb-3">
@@ -28,3 +35,15 @@
     </form>
 </div>
 @endsection
+@push('js')
+<!-- jQuery (wajib untuk Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+@endpush

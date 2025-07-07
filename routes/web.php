@@ -53,6 +53,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::put('pembelian-update-detail/{id}', [PembelianController::class, 'updateDetail'])->name('pembelian.updateDetail');
     Route::delete('pembelian/{id}', [PembelianController::class, 'destroy'])->name('pembelian.destroy');
     Route::delete('pembelian-detail/{id}', [PembelianController::class, 'destroyDetail'])->name('pembelian.destroy-detail');
+    Route::get('hapus-pembelian-detail/{id}', [PembelianController::class, 'hapus_detail'])->name('pembelian.hapusDetail');
+    
+
 
     //CRUD barcode
     Route::get('/barcode', [BarcodeController::class, 'index'])->name('barcode.index');

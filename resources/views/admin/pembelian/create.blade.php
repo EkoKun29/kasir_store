@@ -17,7 +17,14 @@
                     </div>
                     <div class="form-group">
                         <label for="supplier">Supplier</label>
-                        <input type="text" class="form-control" name="supplier" required>
+                        <select class="form-control js-example-basic-single" name="supplier"
+                                autocomplete="off" required>
+                                <option value="" selected>Supplier</option>
+                                @foreach($kios as $pk)
+                                    <option value="{{$pk->toko}}">{{$pk->toko}}</option>
+                                @endforeach
+                                
+                            </select>
                     </div>
                     <div class="mb-3">
                         <label for="status_pembelian" class="form-label">Status Pembelian</label>
@@ -36,3 +43,15 @@
         </div>
         </div>
 @endsection
+@push('js')
+<!-- jQuery (wajib untuk Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+@endpush
