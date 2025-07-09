@@ -93,7 +93,7 @@ class PembelianController extends Controller
             // Simpan detail pembelian
             $detailPembelian = new DetailPembelian;
             $detailPembelian->pembelian_id = $request->pembelian_id;
-            $detailPembelian->produk = strtoupper($request->produk);
+            $detailPembelian->produk = $request->produk;
             // $detailPembelian->tanggal_beli = $pembelian->tanggal_beli; 
             $detailPembelian->harga = $request->harga;
             $detailPembelian->qty = $request->qty;
@@ -165,7 +165,7 @@ class PembelianController extends Controller
 
         $subtotalLama = $detailPembelian->subtotal;
 
-        $detailPembelian->produk = strtoupper($request->produk);
+        $detailPembelian->produk = $request->produk;
         $detailPembelian->harga = $request->harga;
         $detailPembelian->qty = $request->qty;
         $detailPembelian->subtotal = $request->harga * $request->qty;
