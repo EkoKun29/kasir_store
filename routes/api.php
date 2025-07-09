@@ -41,3 +41,6 @@ Route::get('/combined-penjualan', [ConvertApiController::class, 'combinedPenjual
 
 //gabungan pembelian APi
 Route::get('/combined-pembelian', [PembelianGabunganController::class, 'combinedPembelian']);
+Route::get('/pembelian/{start}/{end}', [PembelianGabunganController::class, 'pembelian_tanggal']);
+
+

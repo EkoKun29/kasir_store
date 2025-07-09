@@ -3,6 +3,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pembelian;
+use App\Models\DetailPembelian;
+use Illuminate\Support\Facades\DB;
+
 
 class PembelianGabunganController extends Controller
 {
@@ -50,5 +53,17 @@ class PembelianGabunganController extends Controller
                 'data' => null
             ], 500);
         }
+    }
+
+    public function pembelian_tanggal($start, $end){
+        $startDate = date('Y-m-d', strtotime($start));
+        $endDate = date('Y-m-d', strtotime($end));
+
+        $beli = DetailPembelian::with('pembelian')->whereHas('pembelian', function ($q) use ($startDate, $endDate) {
+            $q->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate]);
+        })
+            ->get();
+
+        return response()->json($beli);
     }
 }
