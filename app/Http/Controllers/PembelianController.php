@@ -156,7 +156,17 @@ class PembelianController extends Controller
 
      public function editDetail ($id){
         $detailPembelian = DetailPembelian::findOrFail($id);
-        return view('admin.pembelian.edit_detail',compact('detailPembelian'));
+        $client = new Client();
+
+        $api = 'https://script.googleusercontent.com/a/macros/aliansyah.com/echo?user_content_key=AehSKLiY8drJsyq0_3Ewt3UV-sFflnxzrZ6IuZnn95flfwjRc-jIsjnC6HUsyUDcTbwumcawuyTNw1pmjWgLsLDhMEMeq-1N_46B8xtJhyKk-Rkx2heCJxZFjxmH2J80FAK752rIXgjTVjytCso_nfnW7PYp00ky7weUm9mS4kqa1AjHfS8TbIHCnr5Py6J-EprBVE0NsgzHsnCpxUgvw6u2Qwp64F-rheQU05BKPo93vjMH0umi7e9opnYIhKr1yfvGQIBa7S7Lugk1S1ke_0zUyTJeTXL7aWpCuQ9DGcHWrfw7wfsNF34_NT_QLwhPaQ&lib=MIv9TbkUYrXGiFbr4eFOEokMJMEEkocmk';
+
+        $response = $client->request('GET', $api, [
+            'verify'  => false,
+        ]);
+
+        $data = json_decode($response->getBody());
+        $produkKoperasi = collect($data);
+        return view('admin.pembelian.edit_detail',compact('detailPembelian','produkKoperasi'));
      }
      
      public function updateDetail(Request $request, $id){

@@ -11,7 +11,19 @@
             <input type="hidden" name="beli_id" value="{{ $detailPembelian->pembelian->id }}">
             <div class="mb-3">
                 <label for="produk" class="form-label">Produk</label>
-                <input type="text" class="form-control" id="produk" name="produk" value="{{ $detailPembelian->produk }}" required>
+                    <div class="form-group">
+                        <label>Produk:</label>
+
+                        <select class="form-control js-example-basic-single" name="produk"
+                            autocomplete="off" required>
+                            <option value="{{ $detailPembelian->produk }}" selected>{{$detailPembelian->produk}}</option>
+                            @foreach($produkKoperasi as $pk)
+                                <option value="{{$pk->nama_barang}}">{{$pk->nama_barang}}</option>
+                            @endforeach
+                            
+                        </select>
+                      </div>
+                {{-- <input type="text" class="form-control" id="produk" name="produk" value="{{ $detailPembelian->produk }}" required> --}}
             </div>
 
             <div class="mb-3">
@@ -40,3 +52,16 @@
     </div>
 </div>
 @endsection
+@push('js')
+<!-- jQuery (wajib untuk Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>
+
+@endpush
