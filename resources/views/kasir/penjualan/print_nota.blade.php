@@ -50,7 +50,7 @@
 <body>
 
     <div class="header">
-        <h3>Navisya Store</h3>
+        <h3>Madinqu Store</h3>
         {{-- <p>Jl. KESATRIA</p>
         <p>Telp: (021) 123-4567</p> --}}
         <p><strong>Nota Penjualan</strong></p>
