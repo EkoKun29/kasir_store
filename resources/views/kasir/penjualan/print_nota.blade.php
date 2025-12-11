@@ -58,7 +58,7 @@
 
     <div class="content">
         <table>
-            <tr><td><strong>Tanggal:</strong></td><td>{{ strtotime('d-m-y',$penjualan->created_at) }}</td></tr>
+            <tr><td><strong>Tanggal:</strong></td><td>{{ $penjualan->created_at->format('d-m-y') }}</td></tr>
             <tr><td><strong>Nomor Nota:</strong></td><td>{{ $penjualan->nomor_surat ?? '-' }}</td></tr>
             <tr><td><strong>Kios:</strong></td><td>{{ $penjualan->id_kios ?? '-' }}</td></tr>
             <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $penjualan->status_penjualan ?? '-' }}</td></tr>
