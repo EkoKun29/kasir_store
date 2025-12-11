@@ -63,6 +63,7 @@
 
     <div class="content">
         <table>
+            {{-- <tr><td><strong>Tanggal:</strong></td><td>{{ $pembelian->created_at->format('d-m-y') }}</td></tr> --}}
             <tr><td><strong>Nomor Surat:</strong></td><td>{{ $pembelian->nomor_surat ?? '-' }}</td></tr>
             <tr><td><strong>Supplier:</strong></td><td>{{ $pembelian->supplier ?? '-' }}</td></tr>
             <tr><td><strong>Status Pembayaran:</strong></td><td>{{ $pembelian->status ?? '-' }}</td></tr>
