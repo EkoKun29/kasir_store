@@ -1,20 +1,41 @@
+name: Deploy to DigitalOcean
+
 on:
   push:
     branches:
       - main
-name: 🚀 Deploy website To Production
+
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: "dodolanobattani.com"
-        username: "u297041661"
-        password: "Rahasia97@"
-        server-dir: "/domains/dodolanobattani.com/public_html/toko-fashion/"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SCP (upload ke server)
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          source: "."
+          target: "/var/www/madinqu-fashion.aliansyahgroup.com"
+
+      - name: Run post-deploy commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          script: |
+            cd /var/www/madinqu-fashion.aliansyahgroup.com
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+            php artisan key:generate --force
+            php artisan migrate --force
+            sudo chown -R www-data:www-data storage bootstrap/cache
+            sudo chmod -R 775 storage bootstrap/cache
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
