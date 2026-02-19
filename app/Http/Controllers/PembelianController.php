@@ -69,7 +69,7 @@ class PembelianController extends Controller
         $detailPembelians = DetailPembelian::where('pembelian_id', $id)->get();
         $client = new Client();
 
-        $api = 'https://script.googleusercontent.com/a/macros/aliansyah.com/echo?user_content_key=AehSKLiY8drJsyq0_3Ewt3UV-sFflnxzrZ6IuZnn95flfwjRc-jIsjnC6HUsyUDcTbwumcawuyTNw1pmjWgLsLDhMEMeq-1N_46B8xtJhyKk-Rkx2heCJxZFjxmH2J80FAK752rIXgjTVjytCso_nfnW7PYp00ky7weUm9mS4kqa1AjHfS8TbIHCnr5Py6J-EprBVE0NsgzHsnCpxUgvw6u2Qwp64F-rheQU05BKPo93vjMH0umi7e9opnYIhKr1yfvGQIBa7S7Lugk1S1ke_0zUyTJeTXL7aWpCuQ9DGcHWrfw7wfsNF34_NT_QLwhPaQ&lib=MIv9TbkUYrXGiFbr4eFOEokMJMEEkocmk';
+        $api = 'https://script.google.com/macros/s/AKfycbyJAis8yqea7xZupH65mTuq5aDqQ7AaR_UviILcc7wVrlqIlLJ5bbzDhBhdSBmKygx8gw/exec';
 
         $response = $client->request('GET', $api, [
             'verify'  => false,
@@ -158,7 +158,7 @@ class PembelianController extends Controller
         $detailPembelian = DetailPembelian::findOrFail($id);
         $client = new Client();
 
-        $api = 'https://script.googleusercontent.com/a/macros/aliansyah.com/echo?user_content_key=AehSKLiY8drJsyq0_3Ewt3UV-sFflnxzrZ6IuZnn95flfwjRc-jIsjnC6HUsyUDcTbwumcawuyTNw1pmjWgLsLDhMEMeq-1N_46B8xtJhyKk-Rkx2heCJxZFjxmH2J80FAK752rIXgjTVjytCso_nfnW7PYp00ky7weUm9mS4kqa1AjHfS8TbIHCnr5Py6J-EprBVE0NsgzHsnCpxUgvw6u2Qwp64F-rheQU05BKPo93vjMH0umi7e9opnYIhKr1yfvGQIBa7S7Lugk1S1ke_0zUyTJeTXL7aWpCuQ9DGcHWrfw7wfsNF34_NT_QLwhPaQ&lib=MIv9TbkUYrXGiFbr4eFOEokMJMEEkocmk';
+        $api = 'https://script.google.com/macros/s/AKfycbyJAis8yqea7xZupH65mTuq5aDqQ7AaR_UviILcc7wVrlqIlLJ5bbzDhBhdSBmKygx8gw/exec';
 
         $response = $client->request('GET', $api, [
             'verify'  => false,
