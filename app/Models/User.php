@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pembelian::class);
     }
+
+    public function audit()
+    {
+        return $this->hasMany(Audit::class, 'id_user');
+    }
+
+    public function audit_video()
+    {
+        return $this->hasMany(AuditVideo::class, 'id_user');
+    }
 }

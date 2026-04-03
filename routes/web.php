@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KiosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\AuditVideoController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\HargaJualController;
@@ -23,17 +25,45 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+//------------------------------------------------------Audit----------------------------------------------------------------------
+Route::prefix('audit')->middleware(['auth','role:admin,audit'])->group(function () {
+
+    Route::get('/', [AuditController::class,'index'])->name('audit.index');
+    Route::get('/create/{kode}', [AuditController::class,'create'])->name('audit.create');
+    Route::post('/store', [AuditController::class,'store'])->name('audit.store');
+    Route::post('/store-detail', [AuditController::class,'storeDetail'])->name('audit.store-detail');
+    Route::get('/show/{id}', [AuditController::class,'show'])->name('audit.show');
+    Route::delete('/delete-detail/{id}', [AuditController::class,'deleteDetail'])->name('audit.detail.delete');
+    Route::delete('/delete-all/{id}', [AuditController::class,'delete'])->name('audit.delete');
+
+});
+
+Route::prefix('audit-video')->middleware(['auth','role:admin,audit'])->group(function () {
+
+    Route::get('/', [AuditVideoController::class,'index'])->name('audit-video.index');
+    Route::get('/create', [AuditVideoController::class,'create'])->name('audit-video.create');
+    Route::post('/store', [AuditVideoController::class,'store'])->name('audit-video.store');
+    Route::post('/store-detail', [AuditVideoController::class,'storeDetail'])->name('audit-video.store-detail');
+    Route::get('/show/{id}', [AuditVideoController::class,'show'])->name('audit-video.show');
+    Route::delete('/delete-detail/{id}', [AuditVideoController::class,'deleteDetail'])->name('audit-video.detail.delete');
+    Route::delete('/delete-all/{id}', [AuditVideoController::class,'delete'])->name('audit-video.delete');
+
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif (auth()->user()->role === 'kasir') {
-            return redirect()->route('kasir.dashboard');
-        }
-    });
+    if (auth()->user()->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    } elseif (auth()->user()->role === 'kasir') {
+        return redirect()->route('kasir.dashboard');
+    } elseif (auth()->user()->role === 'audit') {
+        return redirect()->route('audit.create', 1);
+    }
+});
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('role:admin');
     Route::get('/kasir/dashboard', [KasirController::class, 'index'])->name('kasir.dashboard')->middleware('role:kasir');
+    
 });
 
 //Pembelian

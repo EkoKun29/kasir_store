@@ -26,7 +26,10 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'kasir') {
                 return redirect()->route('kasir.dashboard');
+            }elseif ($user->role === 'audit') {
+                return redirect()->route('audit.create', 1);
             }
+            
         }
 
         return back()->with('error', 'Email atau password salah.');
