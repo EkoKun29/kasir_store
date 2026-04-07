@@ -55,7 +55,6 @@
 <th width="60">No</th>
 <th>Barang</th>
 <th width="120">Qty</th>
-<th width="150">Tgl Exp</th>
 </tr>
 </thead>
 
@@ -67,13 +66,6 @@
 <td>{{ $loop->iteration }}</td>
 <td>{{ $d->produk }}</td>
 <td>{{ $d->qty }}</td>
-<td>
-@if($d->tgl_exp)
-{{ \Carbon\Carbon::parse($d->tgl_exp)->format('d-m-Y') }}
-@else
--
-@endif
-</td>
 </tr>
 
 @empty

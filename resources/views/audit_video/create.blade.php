@@ -44,11 +44,11 @@
                     <label>Qty</label>
                     <input type="number" id="qty" class="form-control">
                 </div>
-
+{{-- 
                 <div class="col-md-3">
                 <label>Tgl Exp</label>
                 <input type="text" id="tgl_exp" name="tgl_exp" class="form-control" placeholder="Pilih tanggal expired">
-                </div>
+                </div> --}}
 
             </div>
 
@@ -71,7 +71,6 @@
                         <th>No</th>
                         <th>Barang</th>
                         <th>Qty</th>
-                        <th>Tgl Exp</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -82,7 +81,6 @@
                         <td>{{ $i+1 }}</td>
                         <td>{{ $d->produk }}</td>
                         <td>{{ $d->qty }}</td>
-                        <td>{{ $d->tgl_exp }}</td>
                         <td>
                             <button class="btn btn-danger btn-sm btn-delete"
                                 data-id="{{ $d->id }}">
@@ -119,13 +117,13 @@ document.addEventListener("DOMContentLoaded", function(){
     // ======================
     // FLATPICKR (FIX)
     // ======================
-    if (document.querySelector("#tgl_exp")) {
-        fp = flatpickr("#tgl_exp", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "d F Y"
-        });
-    }
+    // if (document.querySelector("#tgl_exp")) {
+    //     fp = flatpickr("#tgl_exp", {
+    //         dateFormat: "Y-m-d",
+    //         altInput: true,
+    //         altFormat: "d F Y"
+    //     });
+    // }
 
     // ======================
     // SELECT2
@@ -178,7 +176,7 @@ function addItem(){
     let qty = $('#qty').val();
     let tgl_exp = $('#tgl_exp').val();
 
-    if(!barang || !qty || !tgl_exp){
+    if(!barang || !qty ){
         alert('Lengkapi data!');
         return;
     }
@@ -191,8 +189,7 @@ function addItem(){
         },
         data: {
             barang: barang,
-            qty: qty,
-            tgl_exp: tgl_exp
+            qty: qty
         },
         success: function(res){
 
@@ -205,7 +202,6 @@ function addItem(){
                         <td>${no}</td>
                         <td>${res.data.produk}</td>
                         <td>${res.data.qty}</td>
-                        <td>${res.data.tgl_exp}</td>
                         <td>
                             <button class="btn btn-danger btn-sm btn-delete" data-id="${id}">
                                 Hapus
@@ -218,7 +214,6 @@ function addItem(){
                     null, // 🔥 WAJIB null biar nomor jalan
                     res.data.produk,
                     res.data.qty,
-                    res.data.tgl_exp,
                     `<button class="btn btn-danger btn-sm btn-delete" data-id="${id}">
                         Hapus
                     </button>`

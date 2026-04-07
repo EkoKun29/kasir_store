@@ -68,8 +68,7 @@ public function storeDetail(Request $request)
 {
     $request->validate([
         'barang' => 'required|string',
-        'qty' => 'required|integer|min:1',
-        'tgl_exp' => 'required|date'
+        'qty' => 'required|integer|min:1'
     ]);
 
     try {
@@ -89,8 +88,7 @@ public function storeDetail(Request $request)
         $detail = DetailAudit::create([
             'audit_id' => $audit->id,
             'produk' => $request->barang,
-            'qty' => $request->qty,
-            'tgl_exp' => $request->tgl_exp
+            'qty' => $request->qty
         ]);
 
         return response()->json([
@@ -98,8 +96,7 @@ public function storeDetail(Request $request)
             'data' => [
                 'id' => $detail->id,
                 'produk' => $detail->produk,
-                'qty' => $detail->qty,
-                'tgl_exp' => $detail->tgl_exp
+                'qty' => $detail->qty
             ]
         ]);
 
