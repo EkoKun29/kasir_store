@@ -98,18 +98,18 @@
           <a class="nav-link collapsed" data-bs-target="#audit-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-layout-text-window-reverse"></i><span>Data Audit</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
-          <ul id="audit-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          {{-- <ul id="audit-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
               <a href="{{ route ('audit.index') }}">
                 <i class="bi bi-circle"></i><span>Audit Bulanan</span>
               </a>
             </li>
-          </ul>
+          </ul> --}}
 
           <ul id="audit-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
               <a href="{{ route ('audit-video.index') }}">
-                <i class="bi bi-circle"></i><span>Audit Video</span>
+                <i class="bi bi-circle"></i><span>Audit Harian</span>
               </a>
             </li>
           </ul>
@@ -121,7 +121,7 @@
 
     @if(Auth::user()->role === 'audit')
   <ul class="sidebar-nav" id="sidebar-nav">
-    <li class="nav-item">
+    {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('audit.create',1) }}">
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Audit 1</span>
@@ -144,11 +144,11 @@
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Audit 4</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('audit-video.create') }}">
                 <i class="bi bi-layout-text-window-reverse"></i>
-                <span>Audit Video</span>
+                <span>Audit 1</span>
             </a>
         </li>
   </ul>

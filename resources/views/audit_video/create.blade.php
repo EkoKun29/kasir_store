@@ -5,7 +5,7 @@
 <div id="content">
 <div class="container mt-4">
 
-    <h3>Audit Video</h3>
+    <h3>Audit Harian</h3>
 
     @if(!$audit)
 

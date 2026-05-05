@@ -3,7 +3,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Data Audit Video</h5>
+        <h5 class="card-title">Data Audit Harian</h5>
     <table class="table datatable" style="margin-top: 15px">
         <thead class="thead-dark">
             <tr style="text-align: center">
