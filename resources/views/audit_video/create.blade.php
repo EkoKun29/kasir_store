@@ -101,10 +101,40 @@
 </div>
 @endsection
 
+@push('css')
+<style>
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 38px !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px !important;
+}
+
+.select2-selection__rendered {
+    line-height: normal !important;
+}
+
+.select2-selection__arrow {
+    height: 100% !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection {
+    border: 1px solid #ced4da !important;
+}
+</style>
+@endpush
+
 @push('js')
 
 <!-- Flatpickr -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
 
 <script>
 let table = null;
@@ -114,27 +144,19 @@ document.addEventListener("DOMContentLoaded", function(){
 
     console.log("JS jalan");
 
-    // ======================
-    // FLATPICKR (FIX)
-    // ======================
-    // if (document.querySelector("#tgl_exp")) {
-    //     fp = flatpickr("#tgl_exp", {
-    //         dateFormat: "Y-m-d",
-    //         altInput: true,
-    //         altFormat: "d F Y"
-    //     });
-    // }
+    if (window.jQuery && $.fn.select2) {
 
-    // ======================
-    // SELECT2
-    // ======================
-    if (window.jQuery && $.fn.select2 && $("#barang").length) {
-        $("#barang").select2({ width: '100%' });
+        $('#barang').select2({
+            width: '100%',
+            placeholder: '-- pilih barang --',
+            dropdownParent: $('#content')
+        });
+
+    } else {
+        console.error('Select2 belum ke-load');
     }
 
-    // ======================
-    // DATATABLE (FIX NOMOR)
-    // ======================
+    // DATATABLE
     if (window.jQuery && $.fn.DataTable && $('#tableAudit').length) {
 
         table = $('#tableAudit').DataTable({
@@ -150,13 +172,11 @@ document.addEventListener("DOMContentLoaded", function(){
             order: [[1, 'asc']]
         });
 
-        // 🔥 AUTO NOMOR FIX
         table.on('order.dt search.dt draw.dt', function () {
             table.column(0).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1;
             });
         }).draw();
-
     }
 
 });

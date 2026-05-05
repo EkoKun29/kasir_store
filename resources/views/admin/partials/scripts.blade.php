@@ -1,3 +1,7 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ✅ SELECT2 WAJIB ADA -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Vendor JS Files -->
 <script src="{{ asset ('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
@@ -9,12 +13,13 @@
 <script src="{{ asset ('assets/vendor/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ asset ('assets/vendor/php-email-form/validate.js') }}"></script>
 
-<!-- Template Main JS File -->
+<!-- Template Main JS -->
 <script src="{{ asset ('assets/js/main.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Sweet alert-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@stack('js')
 <script>
     @if(session('success'))
         Swal.fire({
@@ -43,5 +48,4 @@
         });
     }
 </script>
-@stack('js')
 
