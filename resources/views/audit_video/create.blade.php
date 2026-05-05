@@ -102,6 +102,7 @@
 @endsection
 
 @push('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <style>
 .select2-container {
     width: 100% !important;
