@@ -121,7 +121,7 @@
 
     @if(Auth::user()->role === 'audit')
   <ul class="sidebar-nav" id="sidebar-nav">
-    {{-- <li class="nav-item">
+    <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('audit.create',1) }}">
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Audit 1</span>
@@ -144,13 +144,13 @@
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Audit 4</span>
             </a>
-        </li> --}}
-        <li class="nav-item">
+        </li>
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('audit-video.create') }}">
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Audit 1</span>
             </a>
-        </li>
+        </li> --}}
   </ul>
     @elseif(Auth::user()->role === 'kasir')
     <ul class="sidebar-nav" id="sidebar-nav">
