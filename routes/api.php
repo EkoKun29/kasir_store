@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ConvertApiController;
 use App\Http\Controllers\DetailPembelianController;
 use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\Api\PembelianGabunganController;
+use App\Http\Controllers\Api\ExportAuditController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,6 @@ Route::get('/combined-penjualan', [ConvertApiController::class, 'combinedPenjual
 Route::get('/combined-pembelian', [PembelianGabunganController::class, 'combinedPembelian']);
 Route::get('/pembelian/{start}/{end}', [PembelianGabunganController::class, 'pembelian_tanggal']);
 
+
+Route::get('audit-mingguan/{startDate}/{endDate}', [ExportAuditController::class, 'exportAuditMingguan']);
 
