@@ -9,11 +9,22 @@ use App\Models\DetailPembelian;
 class BarcodeController extends Controller
 {
     // Menampilkan seluruh data barcode
-    public function index()
-    {
-        $barcodes = Barcode::all();
-        return view('admin.barcode.show', compact('barcodes'));
+    public function index(Request $request)
+{
+    $query = Barcode::query();
+
+    if ($request->filled('search')) {
+
+        $query->where('produk', 'like', '%' . $request->search . '%');
+
     }
+
+    $barcodes = $query
+        ->orderBy('produk')
+        ->get();
+
+    return view('admin.barcode.show', compact('barcodes'));
+}
 
     // Menampilkan form input barcode
     public function create()

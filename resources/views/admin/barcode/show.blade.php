@@ -4,9 +4,33 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Data Barcode</h5>
-        <a href="{{ route('barcode.create') }}">
-            <button class="btn btn-primary" style="margin-top: 10px">Input Barcode</button>
-          </a>
+        <div class="row mb-3 mt-3">
+
+    <div class="col-md-3">
+        <a href="{{ route('barcode.create') }}" class="btn btn-primary">
+            Input Barcode
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <form action="{{ route('barcode.index') }}" method="GET">
+            <div class="input-group">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Cari produk..."
+                       value="{{ request('search') }}">
+
+                <button class="btn btn-primary">
+                    Cari
+                </button>
+
+            </div>
+        </form>
+    </div>
+
+</div>
         <table class="table datatable">
             <thead>
                 <tr>
