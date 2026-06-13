@@ -5,9 +5,9 @@
     <div class="card-body">
         <h5 class="card-title">Data Penjualan</h5>
     <a href="{{ route('penjualan.create') }}" class="btn btn-primary mb-3">Tambah Data</a>
-    <table class="table datatable">
-        <thead>
-            <tr>
+    <table class="table datatable" style="margin-top: 15px">
+        <thead class="thead-dark">
+            <tr style="text-align: center">
                 <th>No</th>
                 <th>Nomor Surat</th>
                 <th>ID Kios</th>
@@ -18,7 +18,7 @@
         <?php $no =1; ?>
         <tbody>
             @foreach($penjualans as $penjualan)
-                <tr>
+                <tr style="text-align: center">
                     <td>{{ $no++ }}</td>
                     <td>{{ $penjualan->nomor_surat }}</td>
                     <td>{{ $penjualan->id_kios }}</td>
@@ -42,3 +42,24 @@
     </table>
 </div>
 @endsection
+@push('js')
+<script>
+$(document).ready(function () {
+
+    $('.datatable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        language: {
+            search: "Cari:",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            }
+        }
+    });
+
+});
+</script>
+@endpush

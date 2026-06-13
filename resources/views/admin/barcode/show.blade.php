@@ -11,29 +11,11 @@
             Input Barcode
         </a>
     </div>
-
-    <div class="col-md-4">
-        <form action="{{ route('barcode.index') }}" method="GET">
-            <div class="input-group">
-
-                <input type="text"
-                       name="search"
-                       class="form-control"
-                       placeholder="Cari produk..."
-                       value="{{ request('search') }}">
-
-                <button class="btn btn-primary">
-                    Cari
-                </button>
-
-            </div>
-        </form>
-    </div>
-
 </div>
-        <table class="table datatable">
-            <thead>
-                <tr>
+
+        <table class="table datatable" style="margin-top: 15px">
+        <thead class="thead-dark">
+            <tr style="text-align: center">
                     <th>No</th>
                     <th>Produk</th>
                     <th>Tanggal Beli</th>
@@ -47,7 +29,7 @@
             <?php $no =1; ?>
             <tbody>
                 @foreach ($barcodes as $barcode)
-                <tr>
+                <tr style="text-align: center">
                     <td>{{ $no++ }}</td>
                     <td>{{ $barcode->produk }}</td>
                     <td>{{ $barcode->tanggal_beli ? \Carbon\Carbon::parse($barcode->tanggal_beli)->translatedFormat('d-m-Y') : 'Null' }}</td>
@@ -78,3 +60,24 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+$(document).ready(function () {
+
+    $('.datatable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        language: {
+            search: "Cari:",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            }
+        }
+    });
+
+});
+</script>
+@endpush`

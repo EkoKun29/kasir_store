@@ -12,10 +12,12 @@ use GuzzleHttp\Client;
 
 class PembelianController extends Controller
 {
-    // Menampilkan daftar pembelian
+   
     public function index()
     {
-        $pembelian = Pembelian::all();
+        $pembelian = Pembelian::with('detailPembelian', 'user')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('admin.pembelian.index', compact('pembelian'));
     }
 

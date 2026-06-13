@@ -4,9 +4,9 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Detail Pembelian</h5>
-        <table class="table table-bordered">
-            <thead>
-                <tr style="text-align: center">
+        <table class="table datatable" style="margin-top: 15px">
+        <thead class="thead-dark">
+            <tr style="text-align: center">
                     <th>No</th>
                     <th>Produk</th>
                     <th>Harga Beli</th>
@@ -51,3 +51,25 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+$(document).ready(function () {
+
+    $('.datatable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        language: {
+            search: "Cari:",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            }
+        }
+    });
+
+});
+</script>
+@endpush

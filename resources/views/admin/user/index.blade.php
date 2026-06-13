@@ -7,9 +7,9 @@
         <a href="{{ route('users.create') }}">
             <button class="btn btn-primary" style="margin-top: 10px">Input User</button>
           </a>
-        <table class="table datatable">
-        <thead>
-            <tr>
+        <table class="table datatable" style="margin-top: 15px">
+        <thead class="thead-dark">
+            <tr style="text-align: center">
                 <th>ID</th>
                 <th>Nama</th>
                 <th>Email</th>
@@ -38,3 +38,24 @@
     </table>
 </div>
 @endsection
+@push('js')
+<script>
+$(document).ready(function () {
+
+    $('.datatable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        language: {
+            search: "Cari:",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            }
+        }
+    });
+
+});
+</script>
+@endpush
