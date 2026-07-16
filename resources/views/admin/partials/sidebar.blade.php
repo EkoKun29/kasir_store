@@ -114,10 +114,21 @@
             </li>
           </ul>
         </li>
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+          <li class="nav-item">
+                  <a class="nav-link collapsed" href="{{ route('do.index') }}">
+                      <i class="bi bi-layout-text-window-reverse"></i>
+                      <span>Do Store</span>
+                  </a>
+              </li>
+        </ul>
         @endif
         <!-- End akun user Nav -->
 
     </ul>
+
+    
 
     @if(Auth::user()->role === 'audit')
   <ul class="sidebar-nav" id="sidebar-nav">
@@ -152,6 +163,15 @@
             </a>
         </li> --}}
   </ul>
+  @elseif(Auth::user()->role === 'do')
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+              <a class="nav-link collapsed" href="{{ route('do.index') }}">
+                  <i class="bi bi-layout-text-window-reverse"></i>
+                  <span>Do Store</span>
+              </a>
+          </li>
+    </ul>
     @elseif(Auth::user()->role === 'kasir')
     <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">

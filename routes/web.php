@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->route('kasir.dashboard');
     } elseif (auth()->user()->role === 'audit') {
         return redirect()->route('audit.create', 1);
+    }elseif (auth()->user()->role === 'do') {
+        return redirect()->route('do.index');
     }
 });
 
@@ -167,3 +169,16 @@ Route::post('/penjualan/{id}/update-totals', [PenjualanController::class, 'updat
 
 //nota pembelian
 Route::get('/pembelian/{id}/nota', [PembelianController::class, 'nota'])->name('pembelian.nota');
+
+
+//------------------------------------------------------DO MADINQU SNACK----------------------------------------------------------------------
+
+Route::resource('do', App\Http\Controllers\DoStoreController::class);
+Route::post('do/create', [App\Http\Controllers\DoStoreController::class, 'store'])->name('do.store');
+Route::post('do/store-detail', [App\Http\Controllers\DoStoreController::class, 'storeDetail'])->name('do.store-detail');
+Route::get('do/detail/{id}', [App\Http\Controllers\DoStoreController::class, 'show'])->name('do.detail');
+Route::get('do/delete/{id}', [App\Http\Controllers\DoStoreController::class, 'destroy'])->name('delete-do');
+Route::delete('do/detail/delete/{id}', [App\Http\Controllers\DoStoreController::class, 'destroyDetail'])->name('delete-do-detail');
+Route::get('do/print/{id}', [App\Http\Controllers\DoStoreController::class, 'print'])->name('do.print');
+Route::post('do/{id}/finish', [App\Http\Controllers\DoStoreController::class, 'finish'])->name('do.finish');
+Route::post('do/{id}/resync', [App\Http\Controllers\DoStoreController::class, 'resyncSheet'])->name('do.resync');

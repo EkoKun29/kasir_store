@@ -28,6 +28,8 @@ class LoginController extends Controller
                 return redirect()->route('kasir.dashboard');
             }elseif ($user->role === 'audit') {
                 return redirect()->route('audit.create', 1);
+            }elseif ($user->role === 'do') {
+                return redirect()->route('do.index');
             }
             
         }
