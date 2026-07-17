@@ -55,7 +55,7 @@
                         <th>Produk</th>
                         <th>Qty</th>
                         <th>Satuan</th>
-                        <th>Harga</th>
+                        {{-- <th>Harga</th> --}}
                         <th width="90">Aksi</th>
 
                     </tr>
@@ -114,9 +114,9 @@
                             {{ $d->satuan }}
                         </td>
 
-                        <td class="text-end">
+                        {{-- <td class="text-end">
                             Rp {{ number_format($d->harga,0,',','.') }}
-                        </td>
+                        </td> --}}
 
                         <td class="text-center">
 

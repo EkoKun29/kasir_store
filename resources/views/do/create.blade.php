@@ -17,7 +17,9 @@
 
         <div class="mb-3">
             <label>Nama Personil</label>
-            <input type="text" name="nama_personil" class="form-control" required>
+            <input type="text" name="nama_personil" class="form-control" 
+            oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9\/\-\s]/g, '')"
+            required>
         </div>
 
         </div>
@@ -53,7 +55,7 @@
                 <select id="barang" class="form-control">
                     <option value=""></option>
 
-                    @foreach($db as $b)
+                    @foreach($db->unique('produk') as $b)
                         <option value="{{ $b->produk }}">
                             {{ $b->produk }}
                         </option>
@@ -73,13 +75,14 @@
                 <select id="satuan" name="satuan" class="form-control">
                     <option value=""></option>
                     <option value="PCS">PCS</option>
+                    <option value="REM">REM</option>
                 </select>
             </div>
 
-            <div class="col-md-2 mb-3">
+            {{-- <div class="col-md-2 mb-3">
                 <label>Harga</label>
                 <input type="number" id="harga" class="form-control">
-            </div>
+            </div> --}}
 
         </div>
 
@@ -109,7 +112,7 @@
                     <th>Barang</th>
                     <th>Qty</th>
                     <th>Satuan</th>
-                    <th>Harga</th>
+                    {{-- <th>Harga</th> --}}
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -122,7 +125,7 @@
                     <td>{{ $d->produk }}</td>
                     <td>{{ $d->qty }}</td>
                     <td>{{ $d->satuan }}</td>
-                    <td>{{ $d->harga }}</td>
+                    {{-- <td>{{ $d->harga }}</td> --}}
                     <td>
                         <button class="btn btn-danger btn-sm btn-delete"
                                 data-id="{{ $d->id }}">
@@ -233,9 +236,9 @@ function addItem() {
     let barang      = $("#barang").val();
     let qty         = $("#qty").val();
     let satuan      = $("#satuan").val();
-    let harga       = $("#harga").val();
+    // let harga       = $("#harga").val();
 
-    if (!barang || !qty || !satuan || !harga) {
+    if (!barang || !qty || !satuan) {
         alert("Lengkapi data!");
         return;
     }
@@ -253,7 +256,7 @@ function addItem() {
             barang: barang,
             qty: qty,
             satuan: satuan,
-            harga: harga
+            // harga: harga
         },
 
         success: function (res) {
@@ -263,7 +266,7 @@ function addItem() {
                 res.data.produk,
                 res.data.qty,
                 res.data.satuan,
-                res.data.harga,
+                // res.data.harga,
                 `
                 <button class="btn btn-danger btn-sm btn-delete"
                         data-id="${res.data.id}">
@@ -276,7 +279,7 @@ function addItem() {
             $("#barang").val(null).trigger("change");
             $("#qty").val("");
             $("#satuan").val("");
-            $("#harga").val("");
+            // $("#harga").val("");
 
         },
 

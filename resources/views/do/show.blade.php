@@ -67,7 +67,7 @@
 <th>Barang</th>
 <th width="120">Qty</th>
 <th width="150">Satuan</th>
-<th width="150">Harga</th>
+{{-- <th width="150">Harga</th> --}}
 <th width="150">Aksi</th>
 </tr>
 </thead>
@@ -81,7 +81,7 @@
 <td>{{ $d->produk }}</td>
 <td>{{ $d->qty }}</td>
 <td>{{ $d->satuan }}</td>
-<td>{{ $d->harga }}</td>
+{{-- <td>{{ $d->harga }}</td> --}}
 <td>
     <form action="{{ route('delete-do-detail', $d->id) }}" method="POST" class="d-inline">
         @csrf

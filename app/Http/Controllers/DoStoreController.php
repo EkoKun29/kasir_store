@@ -120,7 +120,7 @@ public function storeDetail(Request $request)
         'barang'      => 'required',
         'qty'         => 'required|integer|min:1',
         'satuan'      => 'required',
-        'harga'       => 'required|numeric|min:0',
+        // 'harga'       => 'required|numeric|min:0',
     ]);
 
     $do = DoStore::where('id_user', auth()->id())
@@ -132,7 +132,7 @@ public function storeDetail(Request $request)
         'produk'      => $request->barang,
         'qty'         => $request->qty,
         'satuan'      => $request->satuan,
-        'harga'       => $request->harga,
+        'harga'       => 0,
     ]);
 
     $this->syncDoToSheet($do, $detail);
